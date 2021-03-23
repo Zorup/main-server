@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/boost
+    url: jdbc:mariadb://localhost:18888/board
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: mariadb
@@ -13,12 +13,4 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: none
-
-server:
-  port: 8082
-
-
-
-
-
+      ddl-auto: create
