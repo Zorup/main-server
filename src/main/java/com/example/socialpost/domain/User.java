@@ -2,10 +2,15 @@ package com.example.socialpost.domain;
 
 import io.swagger.annotations.ApiParam;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 //유저 정보 테이블
 @Builder
@@ -15,11 +20,15 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "USER_TB")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = 300058225713026175L;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long userId;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column
     private String name;
@@ -43,6 +52,39 @@ public class User implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     private byte[] image;
 
+    //Security 관련
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        Collection<SimpleGrantedAuthority> r = new ArrayList<>();
+        r.add(new SimpleGrantedAuthority(this.role.getValue()));
+        return r;
+    }
+
+    @Override
+    public String getUsername() {
+        return loginId;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; //계정이 만료되었는 여부 확인 x
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; //계정이 잠겼는지 여부 확인 x
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; //비밀번호 만료 여부 확인 x
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; //활성화 여부 o
+    }
+
     //DTO 객체의 경우 inner 클래스로 구현
     @Data
     @Transactional
@@ -56,19 +98,19 @@ public class User implements Serializable {
     @Data
     @Transactional
     public static class SignRequest{
-        @ApiParam(value = "회원 이름", required = false)
+        @ApiParam(value = "회원 이름")
         private String name;
-        @ApiParam(value = "로그인 시 사용될 아이디", required = false)
+        @ApiParam(value = "로그인 시 사용될 아이디")
         private String loginId;
-        @ApiParam(value = "비밀번호", required = false)
+        @ApiParam(value = "비밀번호")
         private String password;
-        @ApiParam(value = "직책", required = false)
+        @ApiParam(value = "직책")
         private String position;
-        @ApiParam(value = "소속", required = false)
+        @ApiParam(value = "소속")
         private String department;
-        @ApiParam(value = "이메일", required = false)
+        @ApiParam(value = "이메일")
         private String email;
-        @ApiParam(value = "프로필 이미지", required = false)
+        @ApiParam(value = "프로필 이미지")
         private byte[] image;
     }
 

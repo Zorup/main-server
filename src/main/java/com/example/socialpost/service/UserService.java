@@ -1,9 +1,13 @@
 package com.example.socialpost.service;
 
+import com.example.socialpost.common.security.JwtTokenProvider;
+import com.example.socialpost.domain.Role;
 import com.example.socialpost.domain.User;
 import com.example.socialpost.repository.UserJpaRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,6 +18,10 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserJpaRepo userJpaRepo;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private final JwtTokenProvider jwtTokenProvider;
 
     public User signIn(User.SignRequest param){
         /*if(userJpaRepo.findByLoginId(param.getLoginId())!=null){
@@ -31,23 +39,26 @@ public class UserService {
         User user = User.builder()
                 .name(param.getName())
                 .loginId(param.getLoginId())
-                .password(param.getPassword())
+                .password(passwordEncoder.encode(param.getPassword()))
                 .position(param.getPosition())
                 .department(param.getDepartment())
                 .email(param.getEmail())
                 .image(param.getImage())
+                .role(Role.ROLE_USER)
                 .build();
         return userJpaRepo.save(user);
     }
 
-    public User.UserResponse login(User.LoginRequest r){
-        User user = userJpaRepo.findByLoginId(r.getLoginId());
-        User.UserResponse response = new User.UserResponse();
+    public String login(User.LoginRequest r) throws IllegalArgumentException {
+        User user = userJpaRepo.findByLoginId(r.getLoginId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디 입니다."));
 
-        if(user.getPassword().equals(r.getPassword())) {
-            response= new User.UserResponse(user);
+        if(!passwordEncoder.matches(r.getPassword(),user.getPassword())){
+            throw new IllegalArgumentException("잘못된 비밀번호 입니다.");
         }
-        return response; // 해당 경우 차후 validation 적용해서 exception 던질 것
+
+        log.info("Login Success");
+        return jwtTokenProvider.createToken(user.getUsername(),user.getRole());
     }
 
     public User.UserResponse getUserInfo(Long userId){
@@ -58,8 +69,11 @@ public class UserService {
 
     //그룹, 채팅, 알람의 경우 차후 해당 엔티티와 서비스에서 구현? or User service에서 처리
     public User.UserResponse modifyUserInfo(User.SignRequest r){
-        User user = userJpaRepo.findByLoginId(r.getLoginId());
+        User user = userJpaRepo.findByLoginId(r.getLoginId()).get();
         //r에서 패스워드 입력시 암호화해서 r.setpassword()해서 적용해야함
+        if(r.getPassword()!=null){
+            r.setPassword(passwordEncoder.encode(r.getPassword()));
+        }
         user.modifyUserMember(r);
         return new User.UserResponse(userJpaRepo.save(user));
     }

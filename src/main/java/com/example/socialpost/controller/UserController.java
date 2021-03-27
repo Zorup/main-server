@@ -22,7 +22,7 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "사용자가 아이디와 패스워드를 입력하여 로그인 합니다.")
     @PostMapping(value="/login")
-    public User.UserResponse login(@ModelAttribute User.LoginRequest rq){
+    public String login(@ModelAttribute User.LoginRequest rq){
         return userService.login(rq);
     }
 }
