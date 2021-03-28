@@ -10,8 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.CookieGenerator;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
@@ -35,9 +35,11 @@ public class UserController {
     public CommonResult login(@ModelAttribute User.LoginRequest rq, HttpServletResponse response){
         log.info("call login Api");
         String token = userService.login(rq);
-        Cookie cookie = new Cookie("X-Auth-Token", token);
-        cookie.setHttpOnly(true);
-        response.addCookie(cookie);
+        CookieGenerator cg = new CookieGenerator();
+        cg.setCookieName("X-Auth-Token");
+        cg.setCookieMaxAge(-1);
+        cg.setCookieHttpOnly(true);
+        cg.addCookie(response,token);
         return responseService.getSuccessResult();
     }
 }
