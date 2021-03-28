@@ -12,7 +12,12 @@ spring:
     open-in-view: false
     generate-ddl: true
     show-sql: true
-    hibernate:
-      ddl-auto: create
+    #hibernate:
+      #ddl-auto: create
+
   jwt:
     secret: 2021!!ZorupMSA
+
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8

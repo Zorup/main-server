@@ -51,7 +51,7 @@ public class UserService {
 
     public String login(User.LoginRequest r) throws IllegalArgumentException {
         User user = userJpaRepo.findByLoginId(r.getLoginId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException(r.getLoginId()+"는 존재하지 않는 아이디 입니다."));
 
         if(!passwordEncoder.matches(r.getPassword(),user.getPassword())){
             throw new IllegalArgumentException("잘못된 비밀번호 입니다.");

@@ -38,8 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/v1/singin", "/v1/login").permitAll()
-                .anyRequest().authenticated()
+             //   .antMatchers("/v1/singin", "/v1/login").permitAll()
+                .anyRequest().permitAll() //authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/v*/api-docs", "/swagger-resources/**",
                 "/swagger-ui.html", "/webjars/**", "/swagger/**", "/h2-console/**","/",
-                "/css/**","/js/**","/img/**","lib/**"
+                "/css/**","/js/**","/img/**","lib/**","/vendor/**","scss/**"
         );
 
     }
