@@ -27,6 +27,7 @@ public class UserController {
     @ApiOperation(value = "유저 아이디 생성", notes = "사용자가 정보를 입력해 회원 가입을 합니다.")
     @PostMapping(value="/singin")
     public SingleResult<User> signIn(@ModelAttribute User.SignRequest rq){
+        log.info(rq.getLoginId());
         return responseService.getSingleResult(userService.signIn(rq));
     }
 

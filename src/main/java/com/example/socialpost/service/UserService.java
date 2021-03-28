@@ -26,7 +26,9 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     public User signIn(User.SignRequest param){
-        if(userJpaRepo.findByLoginId(param.getLoginId())!=null) {
+        log.info("signIn Service..");
+
+        if(userJpaRepo.findByLoginId(param.getLoginId()).isPresent()){
             throw new AlreadyExitIdException();
         }
 
