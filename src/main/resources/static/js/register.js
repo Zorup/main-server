@@ -24,9 +24,8 @@ function addUser(){
         alert("회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
         movLogin();
     }).fail(function(){
-        alert("실패하였습니다.");
+        alert("실패하였습니다."); //차후 상수값 return하도록 하여, 실패 원인 알리도록 수정
     });
-
 }
 
 function movLogin(){

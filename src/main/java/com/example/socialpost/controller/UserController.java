@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.CookieGenerator;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
@@ -41,6 +42,18 @@ public class UserController {
         cg.setCookieMaxAge(-1);
         cg.setCookieHttpOnly(true);
         cg.addCookie(response,token);
+        return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value = "로그아웃", notes = "사용자가 로그아웃 합니다")
+    @PostMapping(value="/logout")
+    public CommonResult logout(HttpServletResponse response){
+        log.info("call logout Api");
+        CookieGenerator cg = new CookieGenerator();
+        cg.setCookieName("X-Auth-Token");
+        cg.setCookieMaxAge(0);
+        cg.setCookieHttpOnly(true);
+        cg.addCookie(response,null);
         return responseService.getSuccessResult();
     }
 }
