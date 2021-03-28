@@ -51,4 +51,11 @@ public class WebController {
         mv.setViewName("index");
         return mv;
     }
+
+    @GetMapping("/forgot")
+    public ModelAndView forgotPage(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("forgot");
+        return mv;
+    }
 }

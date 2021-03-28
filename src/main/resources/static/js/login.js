@@ -23,3 +23,7 @@ function signIn(){
 function movRegiserPage(){
     location.href = "/register"
 }
+
+function movForgot(){
+    location.href="/forgot"
+}

@@ -31,3 +31,7 @@ function addUser(){
 function movLogin(){
     location.href = "/login"
 }
+
+function movForgot(){
+    location.href="/forgot"
+}
