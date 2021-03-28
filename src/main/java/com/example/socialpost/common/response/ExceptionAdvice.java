@@ -49,6 +49,13 @@ public class ExceptionAdvice {
         return responseService.getFailResult(Integer.valueOf(getMessage("validationError.code")), getMessage("validationError.msg"));
     }
 
+    @ExceptionHandler(AlreadyExitIdException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult alreadyExitIdException(HttpServletRequest request, Exception e) {
+        log.info("validationException:"+e.toString());
+        return responseService.getFailResult(Integer.valueOf(getMessage("alreadyExitId.code")), getMessage("alreadyExitId.msg"));
+    }
+
     // code정보에 해당하는 메시지를 조회합니다.
     private String getMessage(String code) {
         return getMessage(code, null);

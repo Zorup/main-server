@@ -20,6 +20,6 @@ function signIn(){
 
 }
 
-function getTemplate(){
-
+function movRegiserPage(){
+    location.href = "/register"
 }

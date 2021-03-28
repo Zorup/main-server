@@ -1,0 +1,14 @@
+.abtn{
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: blue;
+}
+.abtn:hover{
+    color:mediumpurple;
+}
+.abtn:focus{
+    border: none;
+    outline:none;
+}

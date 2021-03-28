@@ -5,3 +5,6 @@ unKnown:
 userNotFound:
   code: "-1000"
   msg: "사용자 정보가 정확하지 않습니다."
+alreadyExitId:
+  code: "-1001"
+  msg: "이미 존재하는 아이디입니다."
