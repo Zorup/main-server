@@ -1,7 +1,9 @@
 package com.example.socialpost.controller;
 
 import com.example.socialpost.common.response.CommonResult;
+import com.example.socialpost.common.response.ListResult;
 import com.example.socialpost.common.response.ResponseService;
+import com.example.socialpost.domain.Forum;
 import com.example.socialpost.service.ForumService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Api(tags= {"3. 게시판 관리 Api"})
@@ -30,4 +34,18 @@ public class ForumController {
         forumService.addForum(forumName);
         return responseService.getSuccessResult();
     }
+
+    @ApiOperation(value = "게시판 조회", notes = "게시판 목록을 조회합니다.")
+    @GetMapping("/forum")
+    public ListResult<Forum> addForum(){
+        return responseService.getListResult(forumService.findAllForum());
+    }
+
+    @ApiOperation(value = "게시판 삭제", notes = "선택된 게시판들을 삭제합니다.")
+    @DeleteMapping("/forum")
+    public CommonResult deleteForum(@RequestParam(value="forumId[]") List<Long> forumId){
+        forumService.deleteForum(forumId);
+        return responseService.getSuccessResult();
+    }
+
 }

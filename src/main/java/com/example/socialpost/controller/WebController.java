@@ -1,8 +1,10 @@
 package com.example.socialpost.controller;
 
 import com.example.socialpost.common.security.JwtTokenProvider;
+import com.example.socialpost.domain.Forum;
 import com.example.socialpost.domain.Post;
 import com.example.socialpost.domain.User;
+import com.example.socialpost.service.ForumService;
 import com.example.socialpost.service.PostService;
 import com.example.socialpost.service.UserService;
 import io.jsonwebtoken.Jwts;
@@ -26,15 +28,20 @@ public class WebController {
     PostService postService;
     @Autowired
     UserService userService;
+    @Autowired
+    ForumService forumService;
 
     @GetMapping("/template")
     public ModelAndView viewPost(@CookieValue(value = "X-Auth-Token") Cookie cookie){
         User user = userService.getInfoBytoken(cookie.getValue());
-        ModelAndView mv = new ModelAndView();
         List<Post> postList = postService.getAllPosts();
+        List<Forum> forumList = forumService.findAllForum();
+
+        ModelAndView mv = new ModelAndView();
         mv.setViewName("temp");
         mv.addObject("user", user);
-        mv.addObject("postList", postList);
+        mv.addObject("postList", postList); //차후 default 게시글 or 게시판 존재시 첫 게시판에 있는 feed목록 load
+        mv.addObject("forumList", forumList);
         return mv;
     }
 
