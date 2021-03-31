@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 //게시글 테이블
 @DynamicInsert
@@ -43,5 +44,14 @@ public class Post extends TimeEntity implements Serializable {
     @JoinColumn(name="forumId")
     @JsonIgnore
     private Forum forum;
-    //게시판명 추가
+
+    @Data
+    @Transactional
+    public static class PostRequest{
+        private String content;
+        private Long userId;
+        private Long forumId;
+        private Long groupId;
+        //priavet 데이터
+    }
 }
