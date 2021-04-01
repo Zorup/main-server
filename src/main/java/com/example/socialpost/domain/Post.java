@@ -9,6 +9,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 //게시글 테이블
 @DynamicInsert
 @DynamicUpdate
@@ -45,6 +48,10 @@ public class Post extends TimeEntity implements Serializable {
     @JsonIgnore
     private Forum forum;
 
+    /*
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();*/
+
     @Data
     @Transactional
     public static class PostRequest{
@@ -52,6 +59,30 @@ public class Post extends TimeEntity implements Serializable {
         private Long userId;
         private Long forumId;
         private Long groupId;
-        //priavet 데이터
+    }
+
+    @Data
+    @Transactional
+    public static class PostResponse{
+        private Integer likes;
+        private Long postId;
+        private Long userId;
+        private Long forumId;
+        private Long groupId;
+        private List<Comment> comments;
+        private String content;
+        private String userName;
+
+        public PostResponse(Post p){
+            User u = p.getUser();
+            this.likes = p.getLikes();
+            this.postId = p.getPostId();
+            this.userId = u.getUserId();
+            this.forumId = p.getForum().getForumId();
+            this.groupId = p.getGroupId();
+            this.comments = new ArrayList<>();
+            this.content = p.getContent();
+            this.userName = u.getName();
+        }
     }
 }

@@ -1,5 +1,8 @@
 package com.example.socialpost.controller;
 
+import com.example.socialpost.common.response.ListResult;
+import com.example.socialpost.common.response.ResponseService;
+import com.example.socialpost.common.response.SingleResult;
 import com.example.socialpost.domain.Post;
 import com.example.socialpost.service.PostService;
 import io.swagger.annotations.Api;
@@ -17,22 +20,29 @@ import java.util.List;
 @RequestMapping(value ="/v1")
 public class PostController {
     private final PostService postService;
+    private final ResponseService responseService;
 
     @ApiOperation(value = "게시글 생성", notes = "해당 소그룹피드에 게시글을 추가합니다.")
     @PostMapping(value="/post")
-    public Post savePost(@ModelAttribute Post.PostRequest post){
-        return postService.createPost(post);
+    public SingleResult<Post> savePost(@ModelAttribute Post.PostRequest post){
+        return responseService.getSingleResult(postService.createPost(post));
     }
 
     @ApiOperation(value = "게시글 조회", notes = "테스트용 ")
     @GetMapping(value="/post")
-    public List<Post> getAllPost(){
-        return postService.getAllPosts();
+    public ListResult<Post> getAllPost(){
+        return responseService.getListResult(postService.getAllPosts());
     }
 
     @ApiOperation(value = "게시판내 게시글 조회", notes = "게시글 조회")
     @GetMapping(value="/forum/{forumId}/posts")
-    public List<Post> getPosts(@PathVariable("forumId") Long forumId){
-        return postService.getForumPosts(forumId);
+    public ListResult<Post> getPosts(@PathVariable("forumId") Long forumId){
+        return responseService.getListResult(postService.getForumPosts(forumId));
+    }
+
+    @ApiOperation(value = "게시판내 게시글 조회", notes = "게시글과 게시글에 있는 덧글 조회")
+    @GetMapping(value="/forum/{forumId}/postview")
+    public ListResult<Post.PostResponse> getPostview(@PathVariable("forumId") Long forumId){
+        return responseService.getListResult(postService.getPostLists(forumId));
     }
 }

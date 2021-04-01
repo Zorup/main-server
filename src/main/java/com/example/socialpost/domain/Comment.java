@@ -24,17 +24,18 @@ public class Comment extends TimeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
-
-    @ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="postId")
-    @JsonIgnore
-    private Post post; //덧글이 달린 게시글의 위치
-
+    
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
     @JsonIgnore
     private User user; //덧글 작성
 
+    @ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="postId")
+    @JsonIgnore
+    private Post post; //덧글 작성
+
     @Column
     private String content; //실제 덧글 내용
+
 }

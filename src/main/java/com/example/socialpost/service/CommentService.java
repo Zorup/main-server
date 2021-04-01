@@ -30,14 +30,16 @@ public class CommentService {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
-    public Comment addComment(@CookieValue(value = "X-Auth-Token") Cookie cookie, Long postId){
+    public Comment addComment(@CookieValue(value = "X-Auth-Token") Cookie cookie, Long postId, String content){
+        log.info("Log :: addComment start..");
         Post p = postJpaRepo.findById(postId).get();
         User u = userService.getInfoBytoken(cookie.getValue());
 
         Comment newItem = Comment.builder()
-                .post(p).user(u)
+                .content(content)
+                .user(u).post(p)
                 .build();
-
-        return newItem;
+       // p.getComments().add(newItem);
+        return commentJpaRepo.save(newItem);
     }
 }
