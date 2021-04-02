@@ -4,6 +4,7 @@ import com.example.socialpost.common.security.JwtTokenProvider;
 import com.example.socialpost.domain.Forum;
 import com.example.socialpost.domain.Post;
 import com.example.socialpost.domain.User;
+import com.example.socialpost.service.CommentService;
 import com.example.socialpost.service.ForumService;
 import com.example.socialpost.service.PostService;
 import com.example.socialpost.service.UserService;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +33,8 @@ public class WebController {
     UserService userService;
     @Autowired
     ForumService forumService;
+    @Autowired
+    CommentService commentService;
 
     @GetMapping("/template")
     public ModelAndView viewPost(@CookieValue(value = "X-Auth-Token") Cookie cookie){
@@ -63,6 +68,17 @@ public class WebController {
     public ModelAndView forgotPage(){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("forgot");
+        return mv;
+    }
+
+    @PostMapping("/v1/web/comment")
+    public ModelAndView addComment(@CookieValue(value = "X-Auth-Token") Cookie cookie,
+                                   @RequestParam(value = "postId") Long postId,
+                                   @RequestParam(value = "content") String content){
+        commentService.addComment(cookie, postId, content);
+        log.info("log :: event success target post Id : " + postId + " content : " + content);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/template");
         return mv;
     }
 }

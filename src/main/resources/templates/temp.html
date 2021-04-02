@@ -300,7 +300,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- 여기서 부터 시작-->
-                    <div class="container" th:each = "postList,index:${postList}">
+                    <div class="container" th:each = "post,index:${postList}">
                         <div class="d-flex  row">
                             <div class="col-md-7">
                                 <div class="d-flex flex-column comment-section">
@@ -309,7 +309,7 @@
                                             <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">김한성</span><span class="date text-black-50">Shared publicly - March 11, 2021</span></div>
                                         </div>
                                         <div class="mt-2">
-                                            <p class="comment-text" th:text = "${postList.content}">게시글 내용 </p>
+                                            <p class="comment-text" th:text = "${post.content}">게시글 내용 </p>
                                         </div>
                                     </div>
 
@@ -317,13 +317,21 @@
                                         <div class="d-flex flex-row fs-12">
                                             <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
                                             <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
-                                            <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
                                         </div>
                                     </div>
-
-                                    <div class="bg-light p-2">
-                                        <div class="d-flex flex-row align-items-start"><img class="rounded-circle" src="img/undraw_profile.svg" width="40"><textarea class="form-control ml-1 shadow-none textarea"></textarea></div>
-                                        <div class="mt-2 text-right"><button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button><button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button></div>
+                                    <!-- 덧글 입력 기능-->
+                                    <div class="bg-light p-2 InputComment">
+                                        <form action="/v1/web/comment" method="post">
+                                            <div class="d-flex flex-row align-items-start">
+                                                <img class="rounded-circle" src="img/undraw_profile.svg" width="40">
+                                                <input name='postId' th:value="${post.postId}" style="display: none">
+                                                <textarea name ='content' class="form-control ml-1 shadow-none textarea"></textarea>
+                                            </div>
+                                            <div class="mt-2 text-right">
+                                                <input class="btn btn-primary btn-sm shadow-none" type='submit' value='Post comment'/>
+                                                <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
