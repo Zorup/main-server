@@ -65,6 +65,7 @@ function deleteForum(){
 }
 
 
-function switchFeed(){
-    alert("게시판 바뀜")
+function switchFeed(param){
+    let url = '/template/' + param;
+    location.href = url;
 }
