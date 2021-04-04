@@ -5,10 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,6 +75,8 @@ public class Post extends TimeEntity implements Serializable {
         private List<Comment> comments;
         private String content;
         private String userName;
+        private String createdDate;
+        private String modifiedDate;
 
         public PostResponse(Post p){
             User u = p.getUser();
@@ -83,6 +88,8 @@ public class Post extends TimeEntity implements Serializable {
             this.comments = new ArrayList<>();
             this.content = p.getContent();
             this.userName = u.getName();
+            this.createdDate = p.getCreatedDate();
+            this.modifiedDate = p .getModifiedDate();
         }
     }
 }

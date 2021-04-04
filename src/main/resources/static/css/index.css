@@ -33,3 +33,41 @@
 .modalInput:focus{
     outline: none;
 }
+
+
+
+.post-footer-option li{
+    float:left;
+    margin-right:50px;
+    padding-bottom:15px;
+}
+
+.post-footer-option li a{
+    color:#AFB4BD;
+    font-weight:500;
+    font-size:1.3rem;
+}
+
+.photo-profile{
+    border:1px solid #DDD;
+}
+
+.anchor-username h4{
+    font-weight:bold;
+}
+
+.anchor-time{
+    color:#ADB2BB;
+    font-size:0.8rem;
+}
+
+.comment-divider{
+    padding: 0;
+    margin:0;
+}
+
+.comment{
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
