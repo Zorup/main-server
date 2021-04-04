@@ -37,7 +37,7 @@ public class WebController {
     public ModelAndView viewPost(@CookieValue(value = "X-Auth-Token") Cookie cookie){
         User user = userService.getInfoBytoken(cookie.getValue());
         Forum currentForum = forumJpaRepo.findById(1L).get();  //차후 항상 default forum = 1로 설정?
-        List<Forum> forumList = forumService.findAllForum();
+        List<Forum> forumList = forumService.findAllForum(); //차후 그룹명에 해당하는 forum만 불러오도록
         List<Post.PostResponse> postList = postService.getPostLists(1L);
         Collections.reverse(postList);
 
@@ -74,11 +74,13 @@ public class WebController {
     @PostMapping("/v1/web/comment")
     public ModelAndView addComment(@CookieValue(value = "X-Auth-Token") Cookie cookie,
                                    @RequestParam(value = "postId") Long postId,
-                                   @RequestParam(value = "content") String content){
+                                   @RequestParam(value = "content") String content,
+                                   @RequestParam(value = "forumId") Long forumId){
         commentService.addComment(cookie, postId, content);
+        String redirectUrl = "redirect:/template/"+forumId;
         log.info("log :: event success target post Id : " + postId + " content : " + content);
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("redirect:/template");
+        mv.setViewName(redirectUrl);
         return mv;
     }
 

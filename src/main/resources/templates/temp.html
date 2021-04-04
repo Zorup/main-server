@@ -47,11 +47,13 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <button class="nav-link abtn" th:each = "forum,index:${forumList}"  th:onclick="'switchFeed(' + ${forum.forumId} + ')'">
-                    <i class="fas fa-fw fa-square"></i>
-                    <span th:text = "${forum.forumName}">게시판명</span>
-                </button>
+            <li class="nav-item" >
+                <div th:each = "forum,index:${forumList}">
+                    <button th:if="${forum.forumId} != 1" class="nav-link abtn"  th:onclick="'switchFeed(' + ${forum.forumId} + ')'">
+                        <i class="fas fa-fw fa-square"></i>
+                        <span th:text = "${forum.forumName}">게시판명</span>
+                    </button>
+                </div>
             </li>
 
             <!-- Divider -->
@@ -367,6 +369,7 @@
                                             <div class="d-flex flex-row align-items-start">
                                                 <img class="rounded-circle" src="/img/undraw_profile.svg" width="40">
                                                 <input name='postId' th:value="${post.postId}" style="display: none">
+                                                <input name='forumId' th:value="${currentForum.forumId}" style="display: none">
                                                 <textarea name ='content' class="form-control ml-1 shadow-none textarea" placeholder="덧글을 입력하세요."></textarea>
                                             </div>
                                             <div class="mt-2 text-right">
