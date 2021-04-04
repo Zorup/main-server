@@ -2,6 +2,7 @@ package com.example.socialpost.service;
 
 import com.example.socialpost.domain.Comment;
 import com.example.socialpost.domain.Post;
+import com.example.socialpost.domain.User;
 import com.example.socialpost.repository.CommentJpaRepo;
 import com.example.socialpost.repository.ForumJpaRepo;
 import com.example.socialpost.repository.PostJpaRepo;
@@ -9,7 +10,9 @@ import com.example.socialpost.repository.UserJpaRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CookieValue;
 
+import javax.servlet.http.Cookie;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +26,13 @@ public class PostService {
     private final ForumJpaRepo forumJpaRepo;
     private final CommentJpaRepo commentJpaRepo;
     private final UserJpaRepo userJpaRepo;
-    public Post createPost(Post.PostRequest param){
+    private final UserService userService;
+
+    public Post createPost(@CookieValue(value = "X-Auth-Token") Cookie cookie, Post.PostRequest param){
+        User u = userService.getInfoBytoken(cookie.getValue());
         Post newItem = Post.builder().content(param.getContent())
                 .groupId(param.getGroupId()).forum(forumJpaRepo.findById(param.getForumId()).get())
-                .user(userJpaRepo.findById(param.getUserId()).get()).build();
+                .user(u).build();
         //param에서 파일 or 영상 or 사진 있는 경우 추가 user 추가
         return postJpaRepo.save(newItem);
     }

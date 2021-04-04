@@ -1,7 +1,5 @@
 package com.example.socialpost.controller;
 
-import com.example.socialpost.common.security.JwtTokenProvider;
-import com.example.socialpost.domain.Comment;
 import com.example.socialpost.domain.Forum;
 import com.example.socialpost.domain.Post;
 import com.example.socialpost.domain.User;
@@ -9,20 +7,15 @@ import com.example.socialpost.service.CommentService;
 import com.example.socialpost.service.ForumService;
 import com.example.socialpost.service.PostService;
 import com.example.socialpost.service.UserService;
-import io.jsonwebtoken.Jwts;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
-import java.net.http.HttpRequest;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -43,7 +36,7 @@ public class WebController {
         //List<Post> postList = postService.getAllPosts();
         List<Forum> forumList = forumService.findAllForum();
         List<Post.PostResponse> postList = postService.getPostLists(1L);
-
+        Collections.reverse(postList);
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("temp");
@@ -80,6 +73,15 @@ public class WebController {
                                    @RequestParam(value = "content") String content){
         commentService.addComment(cookie, postId, content);
         log.info("log :: event success target post Id : " + postId + " content : " + content);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("redirect:/template");
+        return mv;
+    }
+
+    @PostMapping("/v1/web/post")
+    public ModelAndView addPost(@CookieValue(value = "X-Auth-Token") Cookie cookie,
+                                @ModelAttribute Post.PostRequest post){
+        postService.createPost(cookie, post);
         ModelAndView mv = new ModelAndView();
         mv.setViewName("redirect:/template");
         return mv;

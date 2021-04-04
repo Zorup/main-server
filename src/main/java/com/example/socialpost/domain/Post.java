@@ -59,7 +59,6 @@ public class Post extends TimeEntity implements Serializable {
     @Transactional
     public static class PostRequest{
         private String content;
-        private Long userId;
         private Long forumId;
         private Long groupId;
     }

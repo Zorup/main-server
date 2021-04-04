@@ -10,10 +10,13 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import java.util.List;
 
+@Slf4j
 @Api(tags={"1. 게시글 관리 Api"})
 @RestController
 @RequiredArgsConstructor
@@ -24,8 +27,8 @@ public class PostController {
 
     @ApiOperation(value = "게시글 생성", notes = "해당 소그룹피드에 게시글을 추가합니다.")
     @PostMapping(value="/post")
-    public SingleResult<Post> savePost(@ModelAttribute Post.PostRequest post){
-        return responseService.getSingleResult(postService.createPost(post));
+    public SingleResult<Post> savePost(@CookieValue(value = "X-Auth-Token") Cookie cookie, @ModelAttribute Post.PostRequest post){
+        return responseService.getSingleResult(postService.createPost(cookie, post));
     }
 
     @ApiOperation(value = "게시글 조회", notes = "테스트용 ")
