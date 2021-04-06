@@ -72,6 +72,7 @@ public class WebController {
     }
 
     @PostMapping("/v1/web/comment")
+    @ResponseBody
     public ModelAndView addComment(@CookieValue(value = "X-Auth-Token") Cookie cookie,
                                    @RequestParam(value = "postId") Long postId,
                                    @RequestParam(value = "content") String content,
@@ -79,6 +80,7 @@ public class WebController {
         commentService.addComment(cookie, postId, content);
         String redirectUrl = "redirect:/template/"+forumId;
         log.info("log :: event success target post Id : " + postId + " content : " + content);
+
         ModelAndView mv = new ModelAndView();
         mv.setViewName(redirectUrl);
         return mv;

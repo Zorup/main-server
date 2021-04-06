@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -19,7 +20,9 @@ import javax.servlet.http.Cookie;
 @ResponseBody
 @RequestMapping("/v1")
 public class CommentController {
+    @Autowired
     private final CommentService commentService;
+    @Autowired
     private final ResponseService responseService;
 
     @ApiOperation(value = "덧글 생성", notes = "게시글에 덧글을 추가합니다.")

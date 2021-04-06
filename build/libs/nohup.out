@@ -1,0 +1,117 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.3)
+
+2021-03-29 20:27:39.906  INFO 1685 --- [           main] c.e.socialpost.SocialpostApplication     : Starting SocialpostApplication using Java 11.0.10 on gimhanseong-ui-MacBookPro.local with PID 1685 (/Users/gimhanseong/Desktop/socialpost/build/libs/socialpost-0.0.1-SNAPSHOT.jar started by gimhanseong in /Users/gimhanseong/Desktop/socialpost/build/libs)
+2021-03-29 20:27:39.907  INFO 1685 --- [           main] c.e.socialpost.SocialpostApplication     : No active profile set, falling back to default profiles: default
+2021-03-29 20:27:40.512  INFO 1685 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-03-29 20:27:40.561  INFO 1685 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 4 JPA repository interfaces.
+2021-03-29 20:27:41.036  INFO 1685 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2021-03-29 20:27:41.045  INFO 1685 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-29 20:27:41.045  INFO 1685 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-03-29 20:27:41.085  INFO 1685 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-03-29 20:27:41.085  INFO 1685 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1120 ms
+2021-03-29 20:27:41.214  INFO 1685 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-03-29 20:27:41.297  INFO 1685 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-03-29 20:27:41.341  INFO 1685 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-03-29 20:27:41.391  INFO 1685 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-03-29 20:27:41.495  INFO 1685 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-03-29 20:27:41.561  INFO 1685 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2021-03-29 20:27:41.970  INFO 1685 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-03-29 20:27:41.975  INFO 1685 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/v*/api-docs'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/swagger-resources/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/swagger-ui.html'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/webjars/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/swagger/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/h2-console/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/css/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/js/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/img/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='lib/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/vendor/**'] with []
+2021-03-29 20:27:42.544  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='scss/**'] with []
+2021-03-29 20:27:42.561  INFO 1685 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69d3cf7e, org.springframework.security.web.context.SecurityContextPersistenceFilter@6088451e, org.springframework.security.web.header.HeaderWriterFilter@2262d6d5, org.springframework.security.web.authentication.logout.LogoutFilter@1319bc2a, com.example.socialpost.common.security.JwtAuthenticationFilter@3a3ed300, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f10f633, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@a09303, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1984212d, org.springframework.security.web.session.SessionManagementFilter@51b77cdf, org.springframework.security.web.access.ExceptionTranslationFilter@7efa3f63, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3472947a]
+2021-03-29 20:27:42.583  INFO 1685 --- [           main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-03-29 20:27:42.658  INFO 1685 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-29 20:27:42.752  INFO 1685 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-03-29 20:27:42.893  INFO 1685 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2021-03-29 20:27:42.894  INFO 1685 --- [           main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-03-29 20:27:42.905  INFO 1685 --- [           main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-03-29 20:27:42.924  INFO 1685 --- [           main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-03-29 20:27:43.074  INFO 1685 --- [           main] c.e.socialpost.SocialpostApplication     : Started SocialpostApplication in 3.569 seconds (JVM running for 4.074)
+2021-03-29 20:34:38.417  INFO 1685 --- [nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-29 20:34:38.417  INFO 1685 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-03-29 20:34:38.417  INFO 1685 --- [nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2021-03-29 21:15:54.986  INFO 1685 --- [nio-8082-exec-4] c.e.s.common.response.ExceptionAdvice    : defaultException:org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported
+2021-03-29 21:17:21.451  INFO 1685 --- [nio-8082-exec-1] c.e.s.controller.UserController          : call login Api
+Hibernate: select user0_.user_id as user_id1_3_, user0_.department as departme2_3_, user0_.email as email3_3_, user0_.image as image4_3_, user0_.login_id as login_id5_3_, user0_.name as name6_3_, user0_.password as password7_3_, user0_.position as position8_3_, user0_.role as role9_3_ from user_tb user0_ where user0_.login_id=?
+2021-03-29 21:17:21.647  INFO 1685 --- [nio-8082-exec-1] c.e.socialpost.service.UserService       : Login Success
+Hibernate: select user0_.user_id as user_id1_3_, user0_.department as departme2_3_, user0_.email as email3_3_, user0_.image as image4_3_, user0_.login_id as login_id5_3_, user0_.name as name6_3_, user0_.password as password7_3_, user0_.position as position8_3_, user0_.role as role9_3_ from user_tb user0_ where user0_.login_id=?
+Hibernate: select post0_.post_id as post_id1_2_, post0_.created_date as created_2_2_, post0_.modified_date as modified3_2_, post0_.content as content4_2_, post0_.group_id as group_id5_2_, post0_.likes as likes6_2_, post0_.user_id as user_id7_2_ from post_tb post0_
+Hibernate: select user0_.user_id as user_id1_3_, user0_.department as departme2_3_, user0_.email as email3_3_, user0_.image as image4_3_, user0_.login_id as login_id5_3_, user0_.name as name6_3_, user0_.password as password7_3_, user0_.position as position8_3_, user0_.role as role9_3_ from user_tb user0_ where user0_.login_id=?
+Hibernate: select post0_.post_id as post_id1_2_, post0_.created_date as created_2_2_, post0_.modified_date as modified3_2_, post0_.content as content4_2_, post0_.group_id as group_id5_2_, post0_.likes as likes6_2_, post0_.user_id as user_id7_2_ from post_tb post0_
+2021-03-29 21:40:45.082  INFO 1685 --- [io-8082-exec-10] c.e.s.controller.UserController          : call login Api
+Hibernate: select user0_.user_id as user_id1_3_, user0_.department as departme2_3_, user0_.email as email3_3_, user0_.image as image4_3_, user0_.login_id as login_id5_3_, user0_.name as name6_3_, user0_.password as password7_3_, user0_.position as position8_3_, user0_.role as role9_3_ from user_tb user0_ where user0_.login_id=?
+2021-03-29 21:40:45.209  INFO 1685 --- [io-8082-exec-10] c.e.socialpost.service.UserService       : Login Success
+Hibernate: select user0_.user_id as user_id1_3_, user0_.department as departme2_3_, user0_.email as email3_3_, user0_.image as image4_3_, user0_.login_id as login_id5_3_, user0_.name as name6_3_, user0_.password as password7_3_, user0_.position as position8_3_, user0_.role as role9_3_ from user_tb user0_ where user0_.login_id=?
+Hibernate: select post0_.post_id as post_id1_2_, post0_.created_date as created_2_2_, post0_.modified_date as modified3_2_, post0_.content as content4_2_, post0_.group_id as group_id5_2_, post0_.likes as likes6_2_, post0_.user_id as user_id7_2_ from post_tb post0_
+Error: Unable to access jarfile .jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.4.3)
+
+2021-03-30 02:17:51.740  INFO 2619 --- [           main] c.e.socialpost.SocialpostApplication     : Starting SocialpostApplication using Java 11.0.10 on gimhanseong-ui-MacBookPro.local with PID 2619 (/Users/gimhanseong/Desktop/socialpost/build/libs/socialpost-0.0.1-SNAPSHOT.jar started by gimhanseong in /Users/gimhanseong/Desktop/socialpost/build/libs)
+2021-03-30 02:17:51.742  INFO 2619 --- [           main] c.e.socialpost.SocialpostApplication     : No active profile set, falling back to default profiles: default
+2021-03-30 02:17:52.363  INFO 2619 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-03-30 02:17:52.414  INFO 2619 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 46 ms. Found 4 JPA repository interfaces.
+2021-03-30 02:17:52.881  INFO 2619 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2021-03-30 02:17:52.889  INFO 2619 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-03-30 02:17:52.889  INFO 2619 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-03-30 02:17:52.931  INFO 2619 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-03-30 02:17:52.931  INFO 2619 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1140 ms
+2021-03-30 02:17:53.064  INFO 2619 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-03-30 02:17:53.121  INFO 2619 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-03-30 02:17:53.164  INFO 2619 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-03-30 02:17:53.200  INFO 2619 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-03-30 02:17:53.310  INFO 2619 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-03-30 02:17:53.377  INFO 2619 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MariaDB103Dialect
+2021-03-30 02:17:53.793  INFO 2619 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-03-30 02:17:53.798  INFO 2619 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-03-30 02:17:54.442  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/v*/api-docs'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/swagger-resources/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/swagger-ui.html'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/webjars/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/swagger/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/h2-console/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/css/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/js/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/img/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='lib/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/vendor/**'] with []
+2021-03-30 02:17:54.443  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='scss/**'] with []
+2021-03-30 02:17:54.459  INFO 2619 --- [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69d3cf7e, org.springframework.security.web.context.SecurityContextPersistenceFilter@6088451e, org.springframework.security.web.header.HeaderWriterFilter@2262d6d5, org.springframework.security.web.authentication.logout.LogoutFilter@1319bc2a, com.example.socialpost.common.security.JwtAuthenticationFilter@3a3ed300, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f10f633, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@a09303, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1984212d, org.springframework.security.web.session.SessionManagementFilter@51b77cdf, org.springframework.security.web.access.ExceptionTranslationFilter@7efa3f63, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3472947a]
+2021-03-30 02:17:54.475  INFO 2619 --- [           main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2021-03-30 02:17:54.552  INFO 2619 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-03-30 02:17:54.653  INFO 2619 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2021-03-30 02:17:54.797  INFO 2619 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2021-03-30 02:17:54.797  INFO 2619 --- [           main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2021-03-30 02:17:54.806  INFO 2619 --- [           main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2021-03-30 02:17:54.821  INFO 2619 --- [           main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2021-03-30 02:17:54.955  INFO 2619 --- [           main] c.e.socialpost.SocialpostApplication     : Started SocialpostApplication in 3.594 seconds (JVM running for 3.931)
+2021-03-30 02:18:59.854  INFO 2619 --- [nio-8082-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-03-30 02:18:59.855  INFO 2619 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-03-30 02:18:59.855  INFO 2619 --- [nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2021-03-30 02:19:20.561  INFO 2619 --- [nio-8082-exec-2] c.e.s.common.response.ExceptionAdvice    : defaultException:io.jsonwebtoken.MalformedJwtException: JWT strings must contain exactly 2 period characters. Found: 0

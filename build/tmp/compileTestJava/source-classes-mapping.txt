@@ -1,0 +1,2 @@
+com/example/socialpost/SocialpostApplicationTests.java
+ com.example.socialpost.SocialpostApplicationTests
