@@ -86,3 +86,22 @@ function changeLikes(postId){
         alert("유효하지 않은 입력이거나, 네트워크 오류가 존재합니다. 다시 시도해주세요.");
     });
 }
+
+function ChangeName(){
+    let forumName = $('#ChangeForumName').val();
+
+    $.ajax({
+        url: '/v1/forum',
+        type: 'put',
+        data: {
+            forumName: forumName,
+        },
+        xhrFields: {
+            withCredentials: true
+        }
+    }).done(function(){
+        location.href = "/template";
+    }).fail(function(){
+        alert("유효하지 않은 입력이거나, 네트워크 오류가 존재합니다. 다시 시도해주세요.");
+    });
+}
