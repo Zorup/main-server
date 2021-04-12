@@ -1,7 +1,7 @@
 HELP.md
 .gradle
-.DS_Store
-build/
+build/*
+!build/libs/
 gradle/
 gradlew
 gradlew.*
@@ -9,6 +9,10 @@ gradlew.*
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+### OS generated ###
+.DS_Store
+**/.DS_Store
 
 ### STS ###
 .apt_generated
