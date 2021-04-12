@@ -71,7 +71,7 @@ public class Post extends TimeEntity implements Serializable {
         private Long userId;
         private Long forumId;
         private Long groupId;
-        private List<Comment> comments;
+        private List<Comment.CommentResponse> comments;
         private String content;
         private String userName;
         private String createdDate;

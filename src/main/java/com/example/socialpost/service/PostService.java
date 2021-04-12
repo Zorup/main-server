@@ -70,8 +70,14 @@ public class PostService {
             log.info("postview :: find comments start..");
             List<Comment> comments = commentJpaRepo.findByPost_PostId(p.getPostId()); //3query
             log.info("postview :: comment List load success");
+            log.info("postview :: converting comment List into commentResponse List start..");
             if(!comments.isEmpty()){
-                pr.setComments(comments);
+                List<Comment.CommentResponse> crList = new ArrayList<>();
+                for(Comment c: comments){
+                    Comment.CommentResponse cr = new Comment.CommentResponse(c); //4query (!?????)
+                    crList.add(cr);
+                }
+                pr.setComments(crList);
             }
             prList.add(pr);
         } 
