@@ -7,7 +7,10 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @DynamicInsert
 @DynamicUpdate
@@ -37,5 +40,24 @@ public class Comment extends TimeEntity implements Serializable {
 
     @Column
     private String content; //실제 덧글 내용
+
+    @Data
+    @Transactional
+    public static class CommentResponse{
+        private Long commentId;
+        private String content;
+        private String userName;
+        private String createdDate;
+        private String modifiedDate;
+
+        public CommentResponse(Comment c){
+            User u = c.getUser();
+            this.commentId = c.getCommentId();
+            this.content = c.getContent();
+            this.userName = u.getName();
+            this.createdDate = c.getCreatedDate();
+            this.modifiedDate = c.getModifiedDate();
+        }
+    }
 
 }

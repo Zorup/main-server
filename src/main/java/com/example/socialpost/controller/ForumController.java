@@ -14,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Api(tags= {"3. 게시판 관리 Api"})
@@ -35,10 +37,16 @@ public class ForumController {
         return responseService.getSuccessResult();
     }
 
-    @ApiOperation(value = "게시판 조회", notes = "게시판 목록을 조회합니다.")
+    @ApiOperation(value = "게시판 정보 조회", notes = "게시판 목록 및 디폴트 게시판을 조회합니다.")
     @GetMapping("/forum")
-    public ListResult<Forum> addForum(){
-        return responseService.getListResult(forumService.findAllForum());
+    public Map<String, Object> getForumInfo(){
+        Forum defaultForum = forumService.getDefaultForum(1L);  // 일단 무조건 1번 리턴중. 후에 디폴트포럼 리턴하게 변경필요
+        List<Forum> forumList = forumService.findAllForum();
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("defaultForum", defaultForum);
+        result.put("forumList", forumList);
+
+        return result;
     }
 
     @ApiOperation(value = "게시판 삭제", notes = "선택된 게시판들을 삭제합니다.")
