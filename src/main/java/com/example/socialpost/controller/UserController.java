@@ -27,7 +27,7 @@ public class UserController {
 
     @ApiOperation(value = "유저 정보 반환", notes = "토큰을 기반으로 사용자의 정보를 반환합니다.")
     @GetMapping(value="/user-info")
-    public SingleResult<User> userInfo(@CookieValue(value = "X-Auth-Token") Cookie cookie){
+    public SingleResult<User> getUserInfo(@CookieValue(value = "X-Auth-Token") Cookie cookie){
         return responseService.getSingleResult(userService.getInfoBytoken(cookie.getValue()));
     }
 
