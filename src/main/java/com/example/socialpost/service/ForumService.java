@@ -17,6 +17,10 @@ import java.util.List;
 public class ForumService {
     private final ForumJpaRepo forumJpaRepo;
 
+    public Forum getDefaultForum(Long id){ // 일단 무조건 1번 리턴중. 후에 디폴트포럼 리턴하게 변경필요
+        return forumJpaRepo.findById(id).get();
+    }
+
     public Forum addForum(String forumName){ // 차후 parameter로 그룹 아이디 받기
         Forum newForum = Forum.builder().forumName(forumName).build();
         return forumJpaRepo.save(newForum);
