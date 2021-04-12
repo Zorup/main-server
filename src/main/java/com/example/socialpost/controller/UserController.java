@@ -25,6 +25,12 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
 
+    @ApiOperation(value = "유저 정보 반환", notes = "토큰을 기반으로 사용자의 정보를 반환합니다.")
+    @GetMapping(value="/user-info")
+    public SingleResult<User> userInfo(@CookieValue(value = "X-Auth-Token") Cookie cookie){
+        return responseService.getSingleResult(userService.getInfoBytoken(cookie.getValue()));
+    }
+
     @ApiOperation(value = "유저 아이디 생성", notes = "사용자가 정보를 입력해 회원 가입을 합니다.")
     @PostMapping(value="/signin")
     public SingleResult<User> signIn(@ModelAttribute User.SignRequest rq){
