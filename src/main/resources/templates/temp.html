@@ -27,16 +27,14 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav position-fixed bg-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="temp.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">[차후 그룹명 입력] <sup>1</sup></div>
+                <div class="sidebar-brand-text mx-3">[그룹명] <sup>1</sup></div>
             </a>
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -74,19 +72,19 @@
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded" >
                         <button class="custom-collapse-item abtn" data-toggle="modal" data-target="#subGroup">소그룹 추가</button>
-                        <button class="custom-collapse-item abtn" data-toggle="modal" data-target="#RenameGroup">그룹명 변경</button>
+                        <!--<button class="custom-collapse-item abtn" data-toggle="modal" data-target="#RenameGroup">그룹명 변경</button>-->
                         <button class="custom-collapse-item abtn" data-toggle="modal" data-target="#deleteSmallGroup">소그룹 삭제</button>
                     </div>
                 </div>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+            <!-- Divider
+            <hr class="sidebar-divider d-none d-md-block">-->
 
-            <!-- Sidebar Toggler (Sidebar) -->
+            <!-- Sidebar Toggler (Sidebar)
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
+            </div>-->
 
 
         </ul>
@@ -99,16 +97,13 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                <nav class="navbar fixed-top navbar-expand navbar-light bg-secondary topbar mb-4 static-top shadow">
+                    <a class="navbar-brand ml-auto sidebar-brand d-flex align-items-center justify-content-center" id="topname" href="temp.html">
+                        <div class="sidebar-brand-text mx-5">[그룹명]</div>
+                    </a>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto w-100 navbar-search">
                         <div class="input-group">
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
@@ -129,6 +124,9 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
+
+                            <div class="topbar-divider d-none d-sm-block"></div>
+
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
@@ -307,7 +305,7 @@
                     <div class="container">
                         <div class="d-flex  row">
                             <div class="col-md-7">
-                                <div class="d-flex flex-column comment-section">
+                                <div class="d-flex flex-column comment-section bg-white">
                                     <div class="bg-white p-2">
                                         <div class="d-flex flex-row user-info"><img class="rounded-circle" src="/img/undraw_profile.svg" width="30" height="30">
                                             <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name" th:text = "${user.name}">김한성</span></div>
@@ -330,9 +328,9 @@
                     </div>
                     <hr>
                     <div class="container" th:each = "post,index:${postList}">
-                        <div class="d-flex  row">
-                            <div class="col-md-7">
-                                <div class="d-flex flex-column comment-section">
+                        <div class="d-flex row">
+                            <div class="col-md-7 postpart">
+                                <div class="d-flex flex-column comment-section bg-white">
                                     <div class="bg-white p-2">
                                         <div class="d-flex flex-row user-info"><img class="rounded-circle" src="/img/undraw_profile.svg" width="60" height="60">
                                             <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name" th:text = "${post.userName}">김한성</span><span class="date text-black-50" th:text = "${post.getCreatedDate()}">Shared publicly - March 11, 2021</span></div>
@@ -348,6 +346,7 @@
                                             <a class="p-2 "><i class="fa fa-comment"></i><span th:text = "${#lists.size(post.comments)}">0</span><span class="ml-1">Comment</span></a>
                                         </div>
                                     </div>
+
                                     <!-- comment 부분-->
                                     <div class="comment" th:each="comment : ${post.getComments()}">
                                         <div class="media">

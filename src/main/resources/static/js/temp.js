@@ -45,7 +45,7 @@ function addForum(){
 }
 
 function deleteForum(){
-    alert("delte");
+    alert("delete");
 
     $.ajax({
         url: '/v1/forum',
