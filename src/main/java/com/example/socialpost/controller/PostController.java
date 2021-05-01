@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -46,6 +47,8 @@ public class PostController {
     @ApiOperation(value = "게시판내 게시글 조회", notes = "게시글과 게시글에 있는 덧글 조회")
     @GetMapping(value="/forum/{forumId}/postview")
     public ListResult<Post.PostResponse> getPostview(@PathVariable("forumId") Long forumId){
-        return responseService.getListResult(postService.getPostLists(forumId));
+        List<Post.PostResponse> postList = postService.getPostLists(forumId);
+        Collections.reverse(postList);
+        return responseService.getListResult(postList);
     }
 }
