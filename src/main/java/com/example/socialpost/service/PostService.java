@@ -46,7 +46,23 @@ public class PostService {
     public void deletePost(Long postId){
         postJpaRepo.deleteById(postId);
     }
-    
+
+    public Post.PostResponse getPost(Long postId){
+        Post post = postJpaRepo.findById(postId).get();
+        Post.PostResponse pr = new Post.PostResponse(post);
+        List<Comment> comments = commentJpaRepo.findByPost_PostId(post.getPostId());
+        if(!comments.isEmpty()){
+            List<Comment.CommentResponse> crList = new ArrayList<>();
+            for(Comment c: comments){
+                Comment.CommentResponse cr = new Comment.CommentResponse(c);
+                crList.add(cr);
+            }
+            pr.setComments(crList);
+        }
+
+        return pr;
+    }
+
     public List<Post> getAllPosts(){
         return postJpaRepo.findAll();
     }
