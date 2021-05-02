@@ -51,4 +51,10 @@ public class PostController {
         Collections.reverse(postList);
         return responseService.getListResult(postList);
     }
+
+    @ApiOperation(value = "특정 게시글 하나 조회", notes = "특정 게시글 하나와 게시글에 있는 댓글들 조회")
+    @GetMapping(value="/post/{postId}")
+    public SingleResult<Post.PostResponse> getPost(@PathVariable("postId") Long postId){
+        return responseService.getSingleResult(postService.getPost(postId));
+    }
 }
