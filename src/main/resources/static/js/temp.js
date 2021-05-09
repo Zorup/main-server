@@ -105,3 +105,37 @@ function ChangeName(){
         alert("유효하지 않은 입력이거나, 네트워크 오류가 존재합니다. 다시 시도해주세요.");
     });
 }
+
+$(document).ready(function(){
+
+      var list = $(".list li");
+      var numToShow = 3;
+      var button = $("#next");
+      var numInList = list.length;
+      list.hide();
+      if (numInList > numToShow) {
+        button.show();
+      }
+      list.slice(0, numToShow).show();
+
+      button.click(function(){
+          var showing = list.filter(':visible').length;
+          list.slice(showing - 1, showing + numToShow).fadeIn();
+          var nowShowing = list.filter(':visible').length;
+          if (nowShowing >= numInList) {
+            button.hide();
+          }
+      });
+
+});
+
+$(".posts").slice(0,3).show();
+
+$(".showMore").on("click",function(){
+    $(".posts:hidden").slice(0, 5).show();
+
+    if($(".posts:hidden").length == 0)
+    {
+        $(".showMore").fadeOut();
+    }
+})

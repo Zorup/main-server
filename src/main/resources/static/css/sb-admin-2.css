@@ -10131,7 +10131,7 @@ a:focus {
 }
 
 .topbar {
-  height: 4.375rem;
+  height: 3rem;
 }
 
 .topbar #sidebarToggleTop {
@@ -10824,7 +10824,7 @@ a:focus {
 }
 
 .bg-login-image {
-  background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
+  background: url("https://images.unsplash.com/photo-1612405199545-e3b82ac2bd35?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80/600x800");
   background-position: center;
   background-size: cover;
 }
