@@ -609,8 +609,6 @@ pre code {
 .col-xl-auto {
   position: relative;
   width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
 }
 
 .col {
@@ -10369,7 +10367,7 @@ a:focus {
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item.active,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
-  color: #4e73df;
+  color: yellow;
   font-weight: 700;
 }
 
@@ -10439,7 +10437,7 @@ a:focus {
   text-align: center;
   padding: 0 1rem;
   font-weight: 800;
-  font-size: 0.65rem;
+  font-size: 0.8rem;
 }
 
 .sidebar .sidebar-card {

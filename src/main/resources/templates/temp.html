@@ -24,16 +24,16 @@
 <body class="pt-5" id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" class="field">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav position-fixed bg-light sidebar text-primary accordion sidescroll" id="accordionSidebar">
+        <ul class="navbar-nav position-fixed bg-light sidebar accordion sidescroll" id="accordionSidebar">
             <!-- Sidebar - Brand -->
 
             <hr>
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading text-primary font-weight-bold">
                 소그룹
             </div>
 
@@ -41,8 +41,8 @@
             <li class="nav-item" >
                 <div th:each = "forum,index:${forumList}">
                     <button th:if="${forum.forumId} != 0" class="nav-link abtn"  th:onclick="'switchFeed(' + ${forum.forumId} + ')'">
-                        <i class="fas fa-fw fa-square"></i>
-                        <span th:text = "${forum.forumName}">게시판명</span>
+                        <i class="fas fa-fw fa-square text-primary"></i>
+                        <span class="text-dark font-weight-bold" th:text = "${forum.forumName}">게시판명</span>
                     </button>
                 </div>
             </li>
@@ -51,18 +51,18 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                소그릅 관리
+            <div class="sidebar-heading text-primary font-weight-bold">
+                소그룹 관리
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>설정</span>
+                    <i class="fas fa-fw fa-cog text-dark"></i>
+                    <span class="text-dark font-weight-bold">설정</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapsePages" class="collapse text-dark" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded" >
                         <button class="custom-collapse-item abtn" data-toggle="modal" data-target="#subGroup">소그룹 추가</button>
                         <!--<button class="custom-collapse-item abtn" data-toggle="modal" data-target="#RenameGroup">그룹명 변경</button>-->
@@ -142,7 +142,7 @@
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
+                                <i class="fas fa-bell fa-fw text-white"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
@@ -193,7 +193,7 @@
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
+                                <i class="fas fa-envelope fa-fw text-white"></i>
                                 <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
@@ -261,7 +261,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-white-600 small" th:text = "${user.name}">사용자 이름</span>
+                                <span class="mr-2 d-none d-lg-inline text-white small" th:text = "${user.name}">사용자 이름</span>
                                 <img class="img-profile rounded-circle"
                                     src="/img/undraw_profile.svg">
                             </a>
@@ -297,11 +297,11 @@
                     <!-- 게시글 생성 -->
                     <div class="container">
                         <div class="d-flex row justify-content-center">
-                            <div class="col-md-7 shadow">
+                            <div class="col-md-7 shadow-lg border border-light rounded">
                                 <div class="d-flex flex-column comment-section bg-white">
                                     <div class="bg-white m-2">
                                         <div class="d-flex flex-row user-info"><img class="rounded-circle" src="/img/undraw_profile.svg" width="30" height="30">
-                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name" th:text = "${user.name}">김한성</span></div>
+                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block text-dark font-weight-bold name" th:text = "${user.name}">김한성</span></div>
                                         </div>
                                         <form style="margin: 10px" action="/v1/web/post" method="post">
                                             <div class="d-flex flex-row align-items-start">
@@ -319,15 +319,15 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="col-md-7 justify-content-center">
+                    <hr class="col-md-5 justify-content-center">
 
                     <div class="container posts" th:each = "post,index:${postList}">
                         <div class="d-flex row justify-content-center">
-                            <div class="col-md-7 postpart shadow">
-                                <div class="d-flex flex-column comment-section bg-white">
-                                    <div class="bg-white p-2">
+                            <div class="col-md-7 postpart shadow-lg">
+                                <div class="d-flex flex-column comment-section bg-white border border-light rounded">
+                                    <div class="bg-white p-2 postBorder">
                                         <div class="d-flex flex-row user-info"><img class="rounded-circle" src="/img/undraw_profile.svg" width="60" height="60">
-                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name" th:text = "${post.userName}">김한성</span><span class="date text-black-50" th:text = "${post.getCreatedDate()}">Shared publicly - March 11, 2021</span></div>
+                                            <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block text-dark font-weight-bold name" th:text = "${post.userName}">김한성</span><span class="date text-black-50" th:text = "${post.getCreatedDate()}">Shared publicly - March 11, 2021</span></div>
                                         </div>
                                         <div class="mt-2">
                                             <p class="comment-text" th:text = "${post.content}">게시글 내용 </p>
@@ -357,7 +357,7 @@
                                         </div>
                                     </div>
                                     <!-- 덧글 입력 기능-->
-                                    <div class="p-2 InputComment">
+                                    <div class="p-2 InputComment commentBorder">
                                         <form action="/v1/web/comment" method="post">
                                             <div class="d-flex flex-row align-items-start">
                                                 <img class="rounded-circle" src="/img/undraw_profile.svg" width="40">
@@ -380,7 +380,6 @@
                 <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
-            <button class="d-flex row col-md-1 justify-content-center ml-auto mr-auto showMore">Show More</button>
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
