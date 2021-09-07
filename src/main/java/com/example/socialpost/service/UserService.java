@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -82,5 +83,9 @@ public class UserService {
     public User getInfoBytoken(String token){
         String s = jwtTokenProvider.getUserPk(token);
         return userJpaRepo.findByLoginId(s).orElseThrow(AlreadyExitIdException::new);
+    }
+
+    public List<User> getAllUserInForum(){
+        return userJpaRepo.findAll(); // 차후 기능 확장시 그룹id로 조회해야될 가능성 존재
     }
 }

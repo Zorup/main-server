@@ -1,6 +1,7 @@
 package com.example.socialpost.controller;
 
 import com.example.socialpost.common.response.CommonResult;
+import com.example.socialpost.common.response.ListResult;
 import com.example.socialpost.common.response.ResponseService;
 import com.example.socialpost.common.response.SingleResult;
 import com.example.socialpost.domain.User;
@@ -48,6 +49,7 @@ public class UserController {
         cg.setCookieMaxAge(-1);
         cg.setCookieHttpOnly(true);
         cg.addCookie(response,token);
+        //FCM관련 푸쉬토큰 기능 추가시 해당 영역 코드 추가 필요 가능성 존재
         return responseService.getSuccessResult();
     }
 
@@ -60,6 +62,13 @@ public class UserController {
         cg.setCookieMaxAge(0);
         cg.setCookieHttpOnly(true);
         cg.addCookie(response,null);
+        //FCM관련 푸쉬토큰 기능 추가시 해당 영역 코드 추가 필요 가능성 존재
         return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value = "그룹내 유저 리스트 반환", notes = "그룹내 존재하는 사용자 리스트를 반환합니다.")
+    @GetMapping(value="/group/users")
+    public ListResult<User> getGroupUsers(@CookieValue(value = "X-Auth-Token") Cookie cookie){
+        return responseService.getListResult(userService.getAllUserInForum());
     }
 }
