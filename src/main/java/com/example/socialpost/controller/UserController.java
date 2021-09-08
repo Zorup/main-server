@@ -60,6 +60,8 @@ public class UserController {
         cg.setCookieMaxAge(0);
         cg.setCookieHttpOnly(true);
         cg.addCookie(response,null);
+        //userId pathVariable로 받아 push_token 삭제하는 부분 필요
+        //차후 인증서버와 토의 필요.
         return responseService.getSuccessResult();
     }
 }

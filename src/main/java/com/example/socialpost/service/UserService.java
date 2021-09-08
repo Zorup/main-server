@@ -47,6 +47,7 @@ public class UserService {
                 .department(param.getDepartment())
                 .email(param.getEmail())
                 .image(param.getImage())
+                .pushToken("")
                 .role(Role.ROLE_USER)
                 .build();
         return userJpaRepo.save(user);
@@ -60,7 +61,8 @@ public class UserService {
             throw new HUserNotFoundException();
         }
         log.info("Login Success");
-        return jwtTokenProvider.createToken(user.getUsername(),user.getRole());
+        String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole());
+        return token;
     }
 
     public User.UserResponse getUserInfo(Long userId){
