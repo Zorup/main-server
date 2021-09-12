@@ -138,6 +138,22 @@ public class User implements Serializable, UserDetails {
         }
     }
 
+    //DTO 객체의 경우 inner 클래스로 구현
+    @Data
+    @NoArgsConstructor
+    @Transactional
+    public static class UserMentionResponse{
+        private String loginId;
+        private String name;
+        private Long userId;
+
+        public UserMentionResponse(User user){
+            this.loginId = user.getLoginId();
+            this.name = user.getName();
+            this.userId = user.getUserId();
+        }
+    }
+
     public void modifyUserMember(User.SignRequest r){
         if(r.getPassword()!=null) password = r.getPassword(); //이 부분 서비스단에서 암호화해서 set해서 던져주기
         if(r.getEmail()!=null) email = r.getEmail();

@@ -68,7 +68,7 @@ public class UserController {
 
     @ApiOperation(value = "그룹내 유저 리스트 반환", notes = "그룹내 존재하는 사용자 리스트를 반환합니다.")
     @GetMapping(value="/group/users")
-    public ListResult<User> getGroupUsers(@CookieValue(value = "X-Auth-Token") Cookie cookie){
+    public ListResult<User.UserMentionResponse> getGroupUsers(@CookieValue(value = "X-Auth-Token") Cookie cookie){
         return responseService.getListResult(userService.getAllUserInForum());
     }
 }
