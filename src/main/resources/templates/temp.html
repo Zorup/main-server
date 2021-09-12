@@ -482,31 +482,12 @@
 
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.js"></script>
+    <script src="js/common.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-suggest@2.1.0/dist/bootstrap-suggest.min.js"></script>
 
     <script>
-        //멘션 기능 관련 'url' -> gateway URL 추가, 및 element 관련 파라미터로 받아 사용하도록 처리
-        $.ajax({
-            url: '/v1/group/users',
-            type: 'GET',
-            xhrFields:{
-                withCredentials: true
-            }
-        }).done(function (responseJSON){
-            const users = responseJSON.list;
-            console.log(users);
-            $('.comment-input').suggest('@', {
-                data: users,
-                map: function(user) {
-                    return {
-                        value: user.name,
-                        text: '<strong>'+user.name+'</strong> <small>'+user.loginId+'</small>'
-                    }
-                }
-            });
-        }).fail(function (){
-            alert("사용자 리스트 조회 실패");
-        });
+        let userList = initMentionList('.comment-input');
+        let mentionTargetList = [];
     </script>
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.js"></script>
