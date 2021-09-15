@@ -48,6 +48,9 @@ public class User implements Serializable, UserDetails {
     @Column
     private String email;
 
+    @Column
+    private String pushToken;
+
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] image;
