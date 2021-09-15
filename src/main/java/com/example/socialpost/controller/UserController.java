@@ -68,19 +68,19 @@ public class UserController {
 
     @ApiOperation(value = "그룹내 유저 리스트 반환", notes = "그룹내 존재하는 사용자 리스트를 반환합니다.")
     @GetMapping(value="/group/users")
-    public ListResult<User.UserMentionResponse> getGroupUsers(@CookieValue(value = "X-Auth-Token") Cookie cookie){
+    public ListResult<User.UserMentionResponse> getGroupUsers(){
         return responseService.getListResult(userService.getAllUserInForum());
     }
 
     @ApiOperation(value = "FCM 토큰 사용자 ID 변환", notes = "FCM 토큰이 어떤 사용자의 것인지 체크합니다.")
-    @GetMapping(value="/user")
-    public SingleResult<Long> getUserIdByFcmToken(@RequestParam(name = "push-token") String pushToken){
-        return responseService.getSingleResult(userService.getUserIdByFcmToken(pushToken));
+    @GetMapping(value="/user/push-token")
+    public ListResult<String> getUserPushTokenByUserId(@RequestParam Long[] userId){
+        return responseService.getListResult(userService.getPushTokenByUserId(userId));
     }
 
     @ApiOperation(value = "FCM 토큰 저장", notes = "로그인시 사용자의 FCM 토큰을 재설정합니다. ")
     @PatchMapping(value="/user/{userId}")
-    public CommonResult setUserPushToken(@CookieValue(value = "X-Auth-Token") Cookie cookie, @PathVariable Long userId,
+    public CommonResult setUserPushToken(@PathVariable Long userId,
                                          @RequestParam(name = "push-token")String pushToken){
         log.info("토큰 저장 로직 호출 완료");
         userService.setUserPushToken(userId, pushToken);

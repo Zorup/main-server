@@ -96,9 +96,8 @@ public class UserService {
         return mentionTargets; // 차후 기능 확장시 그룹id로 조회해야될 가능성 존재
     }
 
-    public Long getUserIdByFcmToken(String token){
-        User user =  userJpaRepo.findByPushToken(token).orElseThrow(HUserNotFoundException::new);
-        return user.getUserId();
+    public List<String> getPushTokenByUserId(Long[] userId){
+        return userJpaRepo.findPushTokenByUserIdIn(userId);
     }
 
     public void setUserPushToken(Long userId, String token){
