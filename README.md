@@ -25,6 +25,8 @@
 ### **1. application.yml 확인**
 
 application.yml 파일 내의 url, db이름 등이 본인 환경에 맞게 되어있는지 확인합니다.
+
+사실 다른부분은 신경쓸것 없고 on-profile: local-docker 로 된 부분에서 포트번호랑 db이름/비밀번호 정도만 확인하면 됩니다.
 <br/>
 <br/>
 
