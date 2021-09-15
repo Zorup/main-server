@@ -74,7 +74,7 @@ public class UserController {
 
     @ApiOperation(value = "FCM 토큰 사용자 ID 변환", notes = "FCM 토큰이 어떤 사용자의 것인지 체크합니다.")
     @GetMapping(value="/user")
-    public SingleResult<Long> getUserIdByFcmToken(@CookieValue(value = "X-Auth-Token") Cookie cookie, @RequestParam(name = "push-token") String pushToken){
+    public SingleResult<Long> getUserIdByFcmToken(@RequestParam(name = "push-token") String pushToken){
         return responseService.getSingleResult(userService.getUserIdByFcmToken(pushToken));
     }
 
