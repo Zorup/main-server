@@ -6,6 +6,7 @@ import com.example.socialpost.common.security.JwtTokenProvider;
 import com.example.socialpost.domain.Role;
 import com.example.socialpost.domain.User;
 import com.example.socialpost.repository.UserJpaRepo;
+import com.example.socialpost.repository.UserProjection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ public class UserService {
         return mentionTargets; // 차후 기능 확장시 그룹id로 조회해야될 가능성 존재
     }
 
-    public List<String> getPushTokenByUserId(Long[] userId){
+    public List<UserProjection> getPushTokenByUserId(Long[] userId){
         return userJpaRepo.findPushTokenByUserIdIn(userId);
     }
 

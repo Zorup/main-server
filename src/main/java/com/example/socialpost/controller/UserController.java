@@ -5,6 +5,7 @@ import com.example.socialpost.common.response.ListResult;
 import com.example.socialpost.common.response.ResponseService;
 import com.example.socialpost.common.response.SingleResult;
 import com.example.socialpost.domain.User;
+import com.example.socialpost.repository.UserProjection;
 import com.example.socialpost.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -74,7 +75,7 @@ public class UserController {
 
     @ApiOperation(value = "FCM 토큰 사용자 ID 변환", notes = "FCM 토큰이 어떤 사용자의 것인지 체크합니다.")
     @GetMapping(value="/user/push-token")
-    public ListResult<String> getUserPushTokenByUserId(@RequestParam Long[] userId){
+    public ListResult<UserProjection> getUserPushTokenByUserId(@RequestParam Long[] userId){
         return responseService.getListResult(userService.getPushTokenByUserId(userId));
     }
 
