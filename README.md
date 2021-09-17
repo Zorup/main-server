@@ -99,3 +99,49 @@ docker start 컨테이너이름
 ```
 <br/>
 <br/>
+
+
+
+> ## 참고자료
+
+1. [Spring Data JPA Projections](https://www.baeldung.com/spring-data-jpa-projections).
+
+JPA 사용시 엔티티에서 특정 Column만 프로젝션하여 사용해야하는 경우가 있습니다. 
+
+
+    public List<User.UserMentionResponse> getAllUserInForum(){
+	    List<User> userList = userJpaRepo.findAll();
+	    List<User.UserMentionResponse> mentionTargets = new ArrayList<>();
+	    for(User user : userList){
+		    User.UserMentionResponse userMentionResponse = new User.UserMentionResponse(user);
+		    mentionTargets.add(userMentionResponse);
+	    }
+	    return mentionTargets; 
+    }
+
+위 링크의 내용처럼 Class Based projection은 JPA만을 사용하여 컬렉션형태로 반환하기 어렵습니다. 따라서 기존의 코드는 쿼리 자체에서 특정 column을 프로젝션 하지 않고,
+DTO 클래스를 작성한 후 일일히 값을 넣어주는 방식으로 작성하였습니다.
+
+찾아보니 다음과 같이 Interface 기반의 Projection 방법이 있어 내용 공유합니다.
+
+    package com.example.socialpost.repository;
+    
+    public interface UserProjection {
+	    Long getUserId();
+	    String getPushToken();
+    }
+
+다음과 같이 Projection하고자하는 column에 대한 getter를 인터페이스를 통해 작성합니다. 
+
+    @Query("select u.userId as userId, u.pushToken as pushToken from User u where u.userId in :userIds")  
+    List<UserProjection> findPushTokenByUserIdIn(@Param("userIds")Long[] userIds);
+
+이후 다음과 같이 쿼리 작성 후 위에 작성한 인터페이스를 사용하여 값을 반환하면 
+Getter에 작성한 아이디 : value값으로 파싱된 형태의 json형태를 얻을 수 있습니다.
+사용시 다음의 내용을 주의해야합니다. 
+
+Note that  **recursive projections only work if we traverse from the owning side to the inverse side.**  Were we to do it the other way around, the nested projection would be set to  _null_.
+
+추가적으로 실제 쿼리에서 프로젝션하는 필드명과 인터페이스에서 작성한 getter의 이름이 다르면 Null값으로 출력됩니다. 따라서 위 코드와 같이 column명에 alias를 주어 getter와 동일하게 맞춘 후 사용하는 것이 좋겠습니다. 
+
+---
