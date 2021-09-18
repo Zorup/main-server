@@ -55,15 +55,17 @@ public class UserController {
     }
 
     @ApiOperation(value = "로그아웃", notes = "사용자가 로그아웃 합니다")
-    @PostMapping(value="/logout")
-    public CommonResult logout(HttpServletResponse response){
+    @PostMapping(value="/logout/user/{userId}")
+    public CommonResult logout(@PathVariable Long userId, HttpServletResponse response){
         log.info("call logout Api");
         CookieGenerator cg = new CookieGenerator();
         cg.setCookieName("X-Auth-Token");
         cg.setCookieMaxAge(0);
         cg.setCookieHttpOnly(true);
         cg.addCookie(response,null);
-        //FCM관련 푸쉬토큰 기능 추가시 해당 영역 코드 추가 필요 가능성 존재
+
+        //로그아웃시 웹 푸쉬 알림 방지
+        userService.setUserPushToken(userId, null);
         return responseService.getSuccessResult();
     }
 
