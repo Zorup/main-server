@@ -42,16 +42,9 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "사용자가 아이디와 패스워드를 입력하여 로그인 합니다.")
     @PostMapping(value="/login")
-    public CommonResult login(@ModelAttribute User.LoginRequest rq, HttpServletResponse response){
+    public SingleResult<Long> login(@ModelAttribute User.LoginRequest rq, HttpServletResponse response){
         log.info("call login Api");
-        String token = userService.login(rq);
-        CookieGenerator cg = new CookieGenerator();
-        cg.setCookieName("X-Auth-Token");
-        cg.setCookieMaxAge(-1);
-        cg.setCookieHttpOnly(true);
-        cg.addCookie(response,token);
-        //FCM관련 푸쉬토큰 기능 추가시 해당 영역 코드 추가 필요 가능성 존재
-        return responseService.getSuccessResult();
+        return responseService.getSingleResult(userService.login(rq, response));
     }
 
     @ApiOperation(value = "로그아웃", notes = "사용자가 로그아웃 합니다")

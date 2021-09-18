@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.CookieGenerator;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +57,7 @@ public class UserService {
         return userJpaRepo.save(user);
     }
 
-    public String login(User.LoginRequest r) throws IllegalArgumentException {
+    public Long login(User.LoginRequest r, HttpServletResponse response) throws IllegalArgumentException {
         User user = userJpaRepo.findByLoginId(r.getLoginId())
                 .orElseThrow(HUserNotFoundException::new);
 
@@ -63,7 +65,12 @@ public class UserService {
             throw new HUserNotFoundException();
         }
         log.info("Login Success");
-        return jwtTokenProvider.createToken(user.getUsername(),user.getRole());
+        CookieGenerator cg = new CookieGenerator();
+        cg.setCookieName("X-Auth-Token");
+        cg.setCookieMaxAge(-1);
+        cg.setCookieHttpOnly(true);
+        cg.addCookie(response, jwtTokenProvider.createToken(user.getUsername(),user.getRole()));
+        return user.getUserId();
     }
 
     public User.UserResponse getUserInfo(Long userId){
