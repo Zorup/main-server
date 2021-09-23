@@ -57,7 +57,7 @@ public class UserService {
         return userJpaRepo.save(user);
     }
 
-    public Long login(User.LoginRequest r, HttpServletResponse response) throws IllegalArgumentException {
+    public User login(User.LoginRequest r, HttpServletResponse response) throws IllegalArgumentException {
         User user = userJpaRepo.findByLoginId(r.getLoginId())
                 .orElseThrow(HUserNotFoundException::new);
 
@@ -70,7 +70,8 @@ public class UserService {
         cg.setCookieMaxAge(-1);
         cg.setCookieHttpOnly(true);
         cg.addCookie(response, jwtTokenProvider.createToken(user.getUsername(),user.getRole()));
-        return user.getUserId();
+        log.info("쿠키 설정");
+        return user;
     }
 
     public User.UserResponse getUserInfo(Long userId){

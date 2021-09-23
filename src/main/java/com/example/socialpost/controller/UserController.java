@@ -42,8 +42,14 @@ public class UserController {
 
     @ApiOperation(value = "로그인", notes = "사용자가 아이디와 패스워드를 입력하여 로그인 합니다.")
     @PostMapping(value="/login")
-    public SingleResult<Long> login(@ModelAttribute User.LoginRequest rq, HttpServletResponse response){
-        log.info("call login Api");
+    public SingleResult<User> login(@ModelAttribute User.LoginRequest rq, HttpServletResponse response){
+
+        if(rq.getLoginId() == null){
+            log.info("login Id is null");
+        }
+        if(rq.getPassword() == null){
+            log.info("password is null");
+        }
         return responseService.getSingleResult(userService.login(rq, response));
     }
 
