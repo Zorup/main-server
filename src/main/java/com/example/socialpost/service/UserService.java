@@ -29,7 +29,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     @Autowired
     private final JwtTokenProvider jwtTokenProvider;
-
+    
     public User.UserResponse getUserInfo(Long userId){
         User user = userJpaRepo.findById(userId).orElseThrow(HUserNotFoundException::new);
         return (new User.UserResponse(user));
