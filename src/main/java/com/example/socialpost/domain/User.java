@@ -20,7 +20,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity
 @Table(name = "USER_TB")
-public class User implements Serializable, UserDetails {
+public class User implements Serializable{ //, UserDetails {
     private static final long serialVersionUID = 300058225713026175L;
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -56,37 +56,37 @@ public class User implements Serializable, UserDetails {
     private byte[] image;
 
     //Security 관련
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
-        Collection<SimpleGrantedAuthority> r = new ArrayList<>();
-        r.add(new SimpleGrantedAuthority(this.role.getValue()));
-        return r;
-    }
-
-    @Override
-    public String getUsername() {
-        return loginId;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true; //계정이 만료되었는 여부 확인 x
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true; //계정이 잠겼는지 여부 확인 x
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true; //비밀번호 만료 여부 확인 x
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true; //활성화 여부 o
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities(){
+//        Collection<SimpleGrantedAuthority> r = new ArrayList<>();
+//        r.add(new SimpleGrantedAuthority(this.role.getValue()));
+//        return r;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return loginId;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true; //계정이 만료되었는 여부 확인 x
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true; //계정이 잠겼는지 여부 확인 x
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true; //비밀번호 만료 여부 확인 x
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true; //활성화 여부 o
+//    }
 
     //DTO 객체의 경우 inner 클래스로 구현
     @Data

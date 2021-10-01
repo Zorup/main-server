@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserJpaRepo extends JpaRepository<User, Long> {
+    Optional<User> findByUserId(Long userId);
+
     Optional<User> findByLoginId(String loginId);
 
     @Query("select u.userId as userId, u.pushToken as pushToken from User u where u.userId in :userIds")

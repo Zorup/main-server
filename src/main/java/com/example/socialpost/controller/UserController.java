@@ -27,45 +27,11 @@ public class UserController {
     private final UserService userService;
     private final ResponseService responseService;
 
+    // TODO 프론트 react 전환시 삭제될 API
     @ApiOperation(value = "유저 정보 반환", notes = "토큰을 기반으로 사용자의 정보를 반환합니다.")
     @GetMapping(value="/user-info")
     public SingleResult<User> getUserInfo(@CookieValue(value = "X-Auth-Token") Cookie cookie){
         return responseService.getSingleResult(userService.getInfoBytoken(cookie.getValue()));
-    }
-
-    @ApiOperation(value = "유저 아이디 생성", notes = "사용자가 정보를 입력해 회원 가입을 합니다.")
-    @PostMapping(value="/signin")
-    public SingleResult<User> signIn(@ModelAttribute User.SignRequest rq){
-        log.info(rq.getLoginId());
-        return responseService.getSingleResult(userService.signIn(rq));
-    }
-
-    @ApiOperation(value = "로그인", notes = "사용자가 아이디와 패스워드를 입력하여 로그인 합니다.")
-    @PostMapping(value="/login")
-    public SingleResult<User> login(@ModelAttribute User.LoginRequest rq, HttpServletResponse response){
-
-        if(rq.getLoginId() == null){
-            log.info("login Id is null");
-        }
-        if(rq.getPassword() == null){
-            log.info("password is null");
-        }
-        return responseService.getSingleResult(userService.login(rq, response));
-    }
-
-    @ApiOperation(value = "로그아웃", notes = "사용자가 로그아웃 합니다")
-    @PostMapping(value="/logout/user/{userId}")
-    public CommonResult logout(@PathVariable Long userId, HttpServletResponse response){
-        log.info("call logout Api");
-        CookieGenerator cg = new CookieGenerator();
-        cg.setCookieName("X-Auth-Token");
-        cg.setCookieMaxAge(0);
-        cg.setCookieHttpOnly(true);
-        cg.addCookie(response,null);
-
-        //로그아웃시 웹 푸쉬 알림 방지
-        userService.setUserPushToken(userId, null);
-        return responseService.getSuccessResult();
     }
 
     @ApiOperation(value = "그룹내 유저 리스트 반환", notes = "그룹내 존재하는 사용자 리스트를 반환합니다.")
