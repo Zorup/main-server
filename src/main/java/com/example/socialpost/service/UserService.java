@@ -30,49 +30,6 @@ public class UserService {
     @Autowired
     private final JwtTokenProvider jwtTokenProvider;
 
-    public User signIn(User.SignRequest param){
-        log.info("signIn Service..");
-
-        if(userJpaRepo.findByLoginId(param.getLoginId()).isPresent()){
-            throw new AlreadyExitIdException();
-        }
-
-        if(param.getPosition()!=null){
-            param.setPosition("없음");
-        }
-        if(param.getDepartment()!=null){
-            param.setDepartment("없음");
-        }
-
-        User user = User.builder()
-                .name(param.getName())
-                .loginId(param.getLoginId())
-                .password(passwordEncoder.encode(param.getPassword()))
-                .position(param.getPosition())
-                .department(param.getDepartment())
-                .email(param.getEmail())
-                .image(param.getImage())
-                .role(Role.ROLE_USER)
-                .build();
-        return userJpaRepo.save(user);
-    }
-
-    public Long login(User.LoginRequest r, HttpServletResponse response) throws IllegalArgumentException {
-        User user = userJpaRepo.findByLoginId(r.getLoginId())
-                .orElseThrow(HUserNotFoundException::new);
-
-        if(!passwordEncoder.matches(r.getPassword(),user.getPassword())){
-            throw new HUserNotFoundException();
-        }
-        log.info("Login Success");
-        CookieGenerator cg = new CookieGenerator();
-        cg.setCookieName("X-Auth-Token");
-        cg.setCookieMaxAge(-1);
-        cg.setCookieHttpOnly(true);
-        cg.addCookie(response, jwtTokenProvider.createToken(user.getUsername(),user.getRole()));
-        return user.getUserId();
-    }
-
     public User.UserResponse getUserInfo(Long userId){
         User user = userJpaRepo.findById(userId).orElseThrow(HUserNotFoundException::new);
         return (new User.UserResponse(user));
@@ -90,8 +47,8 @@ public class UserService {
     }
 
     public User getInfoBytoken(String token){
-        String s = jwtTokenProvider.getUserPk(token);
-        return userJpaRepo.findByLoginId(s).orElseThrow(AlreadyExitIdException::new);
+        Long userId = Long.valueOf(jwtTokenProvider.getUserPk(token));
+        return userJpaRepo.findByUserId(userId).orElseThrow(AlreadyExitIdException::new);
     }
 
     public List<User.UserMentionResponse> getAllUserInForum(){
