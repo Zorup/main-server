@@ -29,7 +29,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     @Autowired
     private final JwtTokenProvider jwtTokenProvider;
-    
+
     public User.UserResponse getUserInfo(Long userId){
         User user = userJpaRepo.findById(userId).orElseThrow(HUserNotFoundException::new);
         return (new User.UserResponse(user));
@@ -61,12 +61,4 @@ public class UserService {
         return mentionTargets; // 차후 기능 확장시 그룹id로 조회해야될 가능성 존재
     }
 
-    public List<UserProjection> getPushTokenByUserId(Long[] userId){
-        return userJpaRepo.findPushTokenByUserIdIn(userId);
-    }
-
-    public void setUserPushToken(Long userId, String token){
-        User user = userJpaRepo.findById(userId).orElseThrow(HUserNotFoundException::new);
-        user.setPushToken(token);
-    }
 }
