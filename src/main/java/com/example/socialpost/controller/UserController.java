@@ -40,18 +40,4 @@ public class UserController {
         return responseService.getListResult(userService.getAllUserInForum());
     }
 
-    @ApiOperation(value = "FCM 토큰 사용자 ID 변환", notes = "FCM 토큰이 어떤 사용자의 것인지 체크합니다.")
-    @GetMapping(value="/user/push-token")
-    public ListResult<UserProjection> getUserPushTokenByUserId(@RequestParam Long[] userId){
-        return responseService.getListResult(userService.getPushTokenByUserId(userId));
-    }
-
-    @ApiOperation(value = "FCM 토큰 저장", notes = "로그인시 사용자의 FCM 토큰을 재설정합니다. ")
-    @PatchMapping(value="/user/{userId}")
-    public CommonResult setUserPushToken(@PathVariable Long userId,
-                                         @RequestParam(name = "push-token")String pushToken){
-        log.info("토큰 저장 로직 호출 완료");
-        userService.setUserPushToken(userId, pushToken);
-        return responseService.getSuccessResult();
-    }
 }
