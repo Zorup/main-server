@@ -6,8 +6,6 @@ import com.example.socialpost.common.response.SingleResult;
 import com.example.socialpost.domain.Post;
 import com.example.socialpost.service.PostService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +26,7 @@ public class PostController {
 
     @ApiOperation(value = "게시글 생성", notes = "해당 소그룹피드에 게시글을 추가합니다.")
     @PostMapping(value="/post")
-    public SingleResult<Post> savePost(@CookieValue(value = "X-Auth-Token") Cookie cookie, @ModelAttribute Post.PostRequest post){
+    public SingleResult<Post.PostResponse> savePost(@CookieValue(value = "X-Auth-Token") Cookie cookie, @RequestBody Post.PostRequest post){
         return responseService.getSingleResult(postService.createPost(cookie, post));
     }
 

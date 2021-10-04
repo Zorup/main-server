@@ -1,8 +1,8 @@
 package com.example.socialpost.controller;
 
 import com.example.socialpost.common.response.CommonResult;
-import com.example.socialpost.common.response.ListResult;
 import com.example.socialpost.common.response.ResponseService;
+import com.example.socialpost.common.response.SingleResult;
 import com.example.socialpost.domain.Forum;
 import com.example.socialpost.service.ForumService;
 import io.swagger.annotations.Api;
@@ -32,9 +32,8 @@ public class ForumController {
 
     @ApiOperation(value = "게시판 생성", notes = "게시판을 추가합니다.")
     @PostMapping("/forum")
-    public CommonResult addForum(@ApiParam(value= "게시판 제목",required = true) @RequestParam String forumName){
-        forumService.addForum(forumName);
-        return responseService.getSuccessResult();
+    public SingleResult<Forum> addForum(@ApiParam(value= "게시판 제목",required = true) @RequestParam String forumName){
+        return responseService.getSingleResult(forumService.addForum(forumName));
     }
 
     @ApiOperation(value = "게시판 정보 조회", notes = "게시판 목록 및 디폴트 게시판을 조회합니다.")
@@ -51,7 +50,7 @@ public class ForumController {
 
     @ApiOperation(value = "게시판 삭제", notes = "선택된 게시판들을 삭제합니다.")
     @DeleteMapping("/forum")
-    public CommonResult deleteForum(@RequestParam(value="forumId[]") List<Long> forumId){
+    public CommonResult deleteForum(@RequestParam(value="forumId") List<Long> forumId){
         forumService.deleteForum(forumId);
         return responseService.getSuccessResult();
     }

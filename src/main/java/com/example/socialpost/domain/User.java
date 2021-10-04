@@ -2,15 +2,10 @@ package com.example.socialpost.domain;
 
 import io.swagger.annotations.ApiParam;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 
 //유저 정보 테이블
 @Builder

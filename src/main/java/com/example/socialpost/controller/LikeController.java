@@ -2,7 +2,6 @@ package com.example.socialpost.controller;
 
 import com.example.socialpost.common.response.ResponseService;
 import com.example.socialpost.common.response.SingleResult;
-import com.example.socialpost.domain.Like;
 import com.example.socialpost.service.LikeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -28,13 +28,16 @@ public class PostService {
     private final UserJpaRepo userJpaRepo;
     private final UserService userService;
 
-    public Post createPost(@CookieValue(value = "X-Auth-Token") Cookie cookie, Post.PostRequest param){
+    public Post.PostResponse createPost(@CookieValue(value = "X-Auth-Token") Cookie cookie, Post.PostRequest param){
         User u = userService.getInfoBytoken(cookie.getValue());
         Post newItem = Post.builder().content(param.getContent())
                 .groupId(param.getGroupId()).forum(forumJpaRepo.findById(param.getForumId()).get())
+                .likes(0)
                 .user(u).build();
+
+        Post.PostResponse postResponse = new Post.PostResponse(postJpaRepo.save(newItem));
         //param에서 파일 or 영상 or 사진 있는 경우 추가 user 추가
-        return postJpaRepo.save(newItem);
+        return postResponse;
     }
 
     public Post modifyContents(Post param){
@@ -81,16 +84,12 @@ public class PostService {
             log.info("postview :: post List is Empty");
         }
         for(Post p: pList){
-            log.info("postview :: add PostResponse start..");
-            Post.PostResponse pr = new Post.PostResponse(p); //2 query
-            log.info("postview :: find comments start..");
-            List<Comment> comments = commentJpaRepo.findByPost_PostId(p.getPostId()); //3query
-            log.info("postview :: comment List load success");
-            log.info("postview :: converting comment List into commentResponse List start..");
+            Post.PostResponse pr = new Post.PostResponse(p);
+            List<Comment> comments = commentJpaRepo.findByPost_PostId(p.getPostId());
             if(!comments.isEmpty()){
                 List<Comment.CommentResponse> crList = new ArrayList<>();
                 for(Comment c: comments){
-                    Comment.CommentResponse cr = new Comment.CommentResponse(c); //4query (!?????)
+                    Comment.CommentResponse cr = new Comment.CommentResponse(c);
                     crList.add(cr);
                 }
                 pr.setComments(crList);

@@ -1,21 +1,17 @@
 package com.example.socialpost.controller;
 
-import com.example.socialpost.common.response.CommonResult;
 import com.example.socialpost.common.response.ListResult;
 import com.example.socialpost.common.response.ResponseService;
 import com.example.socialpost.common.response.SingleResult;
 import com.example.socialpost.domain.User;
-import com.example.socialpost.repository.UserProjection;
 import com.example.socialpost.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.CookieGenerator;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Api(tags={"2. 유저 Api"})

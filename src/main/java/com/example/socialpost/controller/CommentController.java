@@ -27,7 +27,7 @@ public class CommentController {
 
     @ApiOperation(value = "덧글 생성", notes = "게시글에 덧글을 추가합니다.")
     @PostMapping("/comment")
-    public SingleResult<Comment> addComment(@CookieValue(value = "X-Auth-Token") Cookie cookie,
+    public SingleResult<Comment.CommentResponse> addComment(@CookieValue(value = "X-Auth-Token") Cookie cookie,
                                             @RequestParam(value = "postId") Long postId,
                                             @RequestParam(value = "content") String content){
         return responseService.getSingleResult(commentService.addComment(cookie, postId, content));
