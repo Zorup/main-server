@@ -3,6 +3,7 @@ package com.example.socialpost.controller;
 import com.example.socialpost.common.response.ListResult;
 import com.example.socialpost.common.response.ResponseService;
 import com.example.socialpost.common.response.SingleResult;
+import com.example.socialpost.domain.Image;
 import com.example.socialpost.domain.Post;
 import com.example.socialpost.service.PostService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,8 +28,10 @@ public class PostController {
 
     @ApiOperation(value = "게시글 생성", notes = "해당 소그룹피드에 게시글을 추가합니다.")
     @PostMapping(value="/post")
-    public SingleResult<Post.PostResponse> savePost(@CookieValue(value = "X-Auth-Token") Cookie cookie, @RequestBody Post.PostRequest post){
-        return responseService.getSingleResult(postService.createPost(cookie, post));
+    public SingleResult<Post.PostResponse> savePost(@CookieValue(value = "X-Auth-Token") Cookie cookie,
+                                                    @ModelAttribute Post.PostRequest post,
+                                                    @ModelAttribute Image.ImageRequestForm imageForm) throws IOException {
+        return responseService.getSingleResult(postService.createPost(cookie, post, imageForm));
     }
 
     @ApiOperation(value = "게시글 조회", notes = "테스트용 ")
@@ -46,7 +50,7 @@ public class PostController {
     @GetMapping(value="/forum/{forumId}/postview")
     public ListResult<Post.PostResponse> getPostview(@PathVariable("forumId") Long forumId){
         List<Post.PostResponse> postList = postService.getPostLists(forumId);
-        Collections.reverse(postList);
+        Collections.reverse(postList);  // 결과물이 날짜별로 오름차순 정렬되어있으므로 내림차순으로 뒤집기
         return responseService.getListResult(postList);
     }
 
