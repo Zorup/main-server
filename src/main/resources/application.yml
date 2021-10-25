@@ -9,7 +9,7 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: mariadb
+    password: draw
   mvc:
     hiddenmethod:
       filter:
@@ -18,15 +18,14 @@ spring:
     open-in-view: false
     generate-ddl: true
     show-sql: true
-  #    아래 선언시 -> 구동시 ddl create, 종료시 ddl drop
-    hibernate:
-      ddl-auto: update
+#    아래 선언시 -> 구동시 ddl create, 종료시 ddl drop
+#    hibernate:
+#      ddl-auto: update
   jwt:
     secret: 2021!!ZorupMSA
   messages:
     basename: i18n/exception
     encoding: UTF-8
-
 ---
 
 # 로컬 IDE기반 개발용 프로파일
@@ -35,19 +34,7 @@ spring:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:mariadb://localhost:3306/test
-  jpa:
-    properties:
-      hibernate:
-        format_sql: true
-
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+    url: jdbc:mariadb://localhost:3306/board
 
 ---
 
