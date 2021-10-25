@@ -7,6 +7,8 @@ import com.example.socialpost.domain.User;
 import com.example.socialpost.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CookieValue;
 
@@ -73,14 +75,28 @@ public class PostService {
         postJpaRepo.deleteById(postId);
     }
 
-    public List<Post> getForumPosts(Long forumId){
-        return postJpaRepo.findByForumForumId(forumId);
+    public List<Post> getForumPosts(Long forumId, Long oldestId, Integer pageSize){
+        // forumId 가지는 post들 중 postId가 oldestId보다 오래된(작은) 것들만 pageSize만큼 가져옵니다.
+
+        int defaultPageSize = 5;
+
+        Sort sort = Sort.by("postId").descending();
+        PageRequest pageable;
+        if (pageSize != null)
+            pageable = PageRequest.of(0, pageSize, sort);
+        else
+            pageable = PageRequest.of(0, defaultPageSize, sort);
+
+        if (oldestId != null)
+            return postJpaRepo.findByForum_ForumId_WithPagination(forumId, oldestId, pageable);
+        else
+            return postJpaRepo.findByForum_ForumId_WithPagination_Initial(forumId, pageable);
     }
 
-    public List<Post.PostResponse> getPostLists(Long forumId){
+    public List<Post.PostResponse> getPostLists(Long forumId, Long oldestId, Integer pageSize){
         log.info("log :: postview start...");
         List<Post.PostResponse> prList = new ArrayList<>();
-        List<Post> pList = getForumPosts(forumId); //1query
+        List<Post> pList = getForumPosts(forumId, oldestId, pageSize); //1query
 
         log.info("postview :: post List load success");
         if(pList.isEmpty()){
@@ -122,8 +138,6 @@ public class PostService {
 
         return pr;
     }
-
-
 
 
     public List<Post> getAllPosts(){
