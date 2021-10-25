@@ -1,10 +1,12 @@
 package com.example.socialpost.service;
 
 import com.example.socialpost.domain.Comment;
-import com.example.socialpost.domain.Image;
 import com.example.socialpost.domain.Post;
 import com.example.socialpost.domain.User;
-import com.example.socialpost.repository.*;
+import com.example.socialpost.repository.CommentJpaRepo;
+import com.example.socialpost.repository.ForumJpaRepo;
+import com.example.socialpost.repository.PostJpaRepo;
+import com.example.socialpost.repository.UserJpaRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,10 +14,8 @@ import org.springframework.web.bind.annotation.CookieValue;
 
 import javax.servlet.http.Cookie;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,41 +25,18 @@ public class PostService {
     private final PostJpaRepo postJpaRepo;
     private final ForumJpaRepo forumJpaRepo;
     private final CommentJpaRepo commentJpaRepo;
-    private final ImageJpaRepo imageJpaRepo;
+    private final UserJpaRepo userJpaRepo;
     private final UserService userService;
 
-    public Post.PostResponse createPost(@CookieValue(value = "X-Auth-Token") Cookie cookie,
-                                        Post.PostRequest param,
-                                        Image.ImageRequestForm imageRequestForm) throws IOException {
+    public Post.PostResponse createPost(@CookieValue(value = "X-Auth-Token") Cookie cookie, Post.PostRequest param){
         User u = userService.getInfoBytoken(cookie.getValue());
-        Post newPost = Post.builder().content(param.getContent())
+        Post newItem = Post.builder().content(param.getContent())
                 .groupId(param.getGroupId()).forum(forumJpaRepo.findById(param.getForumId()).get())
                 .likes(0)
                 .user(u).build();
 
-        log.info("createPost :: insert new Post");
-        final Post newPostSaved = postJpaRepo.save(newPost);
-        Post.PostResponse postResponse = new Post.PostResponse(newPostSaved);
-
-        // 넘어온 이미지가 있으면 이미지 저장하고 응답객체에 추가
-        if (imageRequestForm != null){
-            log.info("createPost :: image data found");
-            List<Image.ImageRequest> images = imageRequestForm.getImages();
-
-            List<Image> imageList = images.stream()
-                    .map(img -> Image.of(img).post(newPostSaved).build())
-                    .collect(Collectors.toList());
-
-            log.info("createPost :: insert new Images");
-            imageList = imageJpaRepo.saveAll(imageList);
-
-            postResponse.setImages(
-                    imageList.stream().map(Image.ImageResponse::of).collect(Collectors.toList())
-            );
-        }
-
-        //param에서 파일 or 영상 있는 경우 추가 user 추가
-
+        Post.PostResponse postResponse = new Post.PostResponse(postJpaRepo.save(newItem));
+        //param에서 파일 or 영상 or 사진 있는 경우 추가 user 추가
         return postResponse;
     }
 
@@ -71,6 +48,26 @@ public class PostService {
     
     public void deletePost(Long postId){
         postJpaRepo.deleteById(postId);
+    }
+
+    public Post.PostResponse getPost(Long postId){
+        Post post = postJpaRepo.findById(postId).get();
+        Post.PostResponse pr = new Post.PostResponse(post);
+        List<Comment> comments = commentJpaRepo.findByPost_PostId(post.getPostId());
+        if(!comments.isEmpty()){
+            List<Comment.CommentResponse> crList = new ArrayList<>();
+            for(Comment c: comments){
+                Comment.CommentResponse cr = new Comment.CommentResponse(c);
+                crList.add(cr);
+            }
+            pr.setComments(crList);
+        }
+
+        return pr;
+    }
+
+    public List<Post> getAllPosts(){
+        return postJpaRepo.findAll();
     }
 
     public List<Post> getForumPosts(Long forumId){
@@ -87,46 +84,18 @@ public class PostService {
             log.info("postview :: post List is Empty");
         }
         for(Post p: pList){
-            prList.add(makeResponse(p));
-        }
-
-        return prList;
-    }
-
-    public Post.PostResponse getPost(Long postId){
-        Post post = postJpaRepo.findById(postId).get();
-        return makeResponse(post);
-    }
-
-    private Post.PostResponse makeResponse(Post post){
-        Post.PostResponse pr = new Post.PostResponse(post);
-
-        log.info("load comment list");
-        List<Comment> comments = commentJpaRepo.findByPost_PostId(post.getPostId());
-        if(!comments.isEmpty()){
-            List<Comment.CommentResponse> crList = new ArrayList<>();
-            for(Comment c: comments){
-                Comment.CommentResponse cr = new Comment.CommentResponse(c);
-                crList.add(cr);
+            Post.PostResponse pr = new Post.PostResponse(p);
+            List<Comment> comments = commentJpaRepo.findByPost_PostId(p.getPostId());
+            if(!comments.isEmpty()){
+                List<Comment.CommentResponse> crList = new ArrayList<>();
+                for(Comment c: comments){
+                    Comment.CommentResponse cr = new Comment.CommentResponse(c);
+                    crList.add(cr);
+                }
+                pr.setComments(crList);
             }
-            pr.setComments(crList);
-        }
-
-        log.info("load image list");
-        imageJpaRepo.findByPost_PostId_OrderBySeq(post.getPostId())
-                .ifPresent(images -> {
-                    List<Image.ImageResponse> irList = images.stream()
-                            .map(Image.ImageResponse::of).collect(Collectors.toList());
-                    pr.setImages(irList);
-                });
-
-        return pr;
-    }
-
-
-
-
-    public List<Post> getAllPosts(){
-        return postJpaRepo.findAll();
+            prList.add(pr);
+        } 
+        return prList;
     }
 }
