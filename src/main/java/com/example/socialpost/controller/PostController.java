@@ -42,15 +42,19 @@ public class PostController {
 
     @ApiOperation(value = "게시판내 게시글 조회", notes = "게시글 조회")
     @GetMapping(value="/forum/{forumId}/posts")
-    public ListResult<Post> getPosts(@PathVariable("forumId") Long forumId){
-        return responseService.getListResult(postService.getForumPosts(forumId));
+    public ListResult<Post> getPosts(@PathVariable("forumId") Long forumId,
+                                     @RequestParam(required = false) Long oldestId,
+                                     @RequestParam(required = false) Integer pageSize){
+        return responseService.getListResult(postService.getForumPosts(forumId, oldestId, pageSize));
     }
 
     @ApiOperation(value = "게시판내 게시글 조회", notes = "게시글과 게시글에 있는 덧글 조회")
     @GetMapping(value="/forum/{forumId}/postview")
-    public ListResult<Post.PostResponse> getPostview(@PathVariable("forumId") Long forumId){
-        List<Post.PostResponse> postList = postService.getPostLists(forumId);
-        Collections.reverse(postList);  // 결과물이 날짜별로 오름차순 정렬되어있으므로 내림차순으로 뒤집기
+    public ListResult<Post.PostResponse> getPostview(@PathVariable("forumId") Long forumId,
+                                                     @RequestParam(required = false) Long oldestId,
+                                                     @RequestParam(required = false) Integer pageSize){
+        List<Post.PostResponse> postList = postService.getPostLists(forumId, oldestId, pageSize);
+
         return responseService.getListResult(postList);
     }
 
