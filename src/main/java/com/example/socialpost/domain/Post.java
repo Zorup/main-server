@@ -5,13 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class Post extends TimeEntity implements Serializable {
     @Column
     private Long postId;
 
-    @Column
+    @Column(length = 500)
     private String content;
 
     @ManyToOne(targetEntity = User.class, fetch=FetchType.LAZY)
@@ -58,7 +55,7 @@ public class Post extends TimeEntity implements Serializable {
     @Data
     @Transactional
     public static class PostRequest{
-        private String content;
+        private String content; // innerHTML with <img src="">
         private Long forumId;
         private Long groupId;
     }
@@ -72,6 +69,7 @@ public class Post extends TimeEntity implements Serializable {
         private Long forumId;
         private Long groupId;
         private List<Comment.CommentResponse> comments;
+        private List<Image.ImageResponse> images;
         private String content;
         private String userName;
         private String createdDate;
@@ -85,6 +83,7 @@ public class Post extends TimeEntity implements Serializable {
             this.forumId = p.getForum().getForumId();
             this.groupId = p.getGroupId();
             this.comments = new ArrayList<>();
+            this.images = new ArrayList<>();
             this.content = p.getContent();
             this.userName = u.getName();
             this.createdDate = p.getCreatedDate();
