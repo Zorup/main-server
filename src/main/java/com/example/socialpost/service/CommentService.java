@@ -43,4 +43,8 @@ public class CommentService {
 
         return new Comment.CommentResponse(commentJpaRepo.save(newItem));
     }
+
+    public void deleteComment(Long commentId){
+        commentJpaRepo.deleteById(commentId);
+    }
 }
