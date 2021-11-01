@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -35,6 +37,7 @@ public class Comment extends TimeEntity implements Serializable {
 
     @ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY)
     @JoinColumn(name="postId")
+    @OnDelete(action = OnDeleteAction.CASCADE)  // delete all comments related to the post when delete the post
     @JsonIgnore
     private Post post; //덧글 작성
 

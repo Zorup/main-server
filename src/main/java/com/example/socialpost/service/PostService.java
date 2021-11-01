@@ -72,6 +72,7 @@ public class PostService {
     }
     
     public void deletePost(Long postId){
+        // 연관 comments 삭제는 DB constraint 설정(hibernate @OnDelete)으로 DB에서 알아서 처리
         postJpaRepo.deleteById(postId);
     }
 
