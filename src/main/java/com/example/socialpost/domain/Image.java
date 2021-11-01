@@ -3,6 +3,8 @@ package com.example.socialpost.domain;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -31,6 +33,7 @@ public class Image {
 
     @ManyToOne(targetEntity = Post.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="postId")
+    @OnDelete(action = OnDeleteAction.CASCADE)  // delete all images related to the post when delete the post
     private Post post;
 
     @Column

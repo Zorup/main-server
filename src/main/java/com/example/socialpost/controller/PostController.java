@@ -1,5 +1,6 @@
 package com.example.socialpost.controller;
 
+import com.example.socialpost.common.response.CommonResult;
 import com.example.socialpost.common.response.ListResult;
 import com.example.socialpost.common.response.ResponseService;
 import com.example.socialpost.common.response.SingleResult;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -31,6 +31,9 @@ public class PostController {
     public SingleResult<Post.PostResponse> savePost(@CookieValue(value = "X-Auth-Token") Cookie cookie,
                                                     @ModelAttribute Post.PostRequest post,
                                                     @ModelAttribute Image.ImageRequestForm imageForm) throws IOException {
+        log.info("content: " + post.getContent());
+        log.info("forumId: " + post.getForumId());
+        log.info("groupId: " + post.getGroupId());
         return responseService.getSingleResult(postService.createPost(cookie, post, imageForm));
     }
 
@@ -62,5 +65,20 @@ public class PostController {
     @GetMapping(value="/post/{postId}")
     public SingleResult<Post.PostResponse> getPost(@PathVariable("postId") Long postId){
         return responseService.getSingleResult(postService.getPost(postId));
+    }
+
+    @ApiOperation(value = "게시글 삭제", notes = "특정 게시글 하나를 삭제")
+    @DeleteMapping(value="/post/{postId}")
+    public CommonResult deletePost(@PathVariable("postId") Long postId){
+        postService.deletePost(postId);
+        return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value = "게시글 수정", notes = "특정 게시글 하나를 수정")
+    @PatchMapping("/post/{postId}")
+    public SingleResult<Post.PostResponse> updatePost(@ModelAttribute Post.PostRequest post,
+                                                     @ModelAttribute Image.ImageRequestForm imageForm,
+                                                      @PathVariable("postId") Long postId) {
+        return responseService.getSingleResult(postService.updatePost(post, imageForm, postId));
     }
 }

@@ -65,6 +65,37 @@ public class PostService {
         return postResponse;
     }
 
+    public Post.PostResponse updatePost(Post.PostRequest param,
+                                        Image.ImageRequestForm imageRequestForm, Long postId) {
+        log.info("updatePost :: get and update the Post");
+        Post target = postJpaRepo.findById(postId).get();
+        target.setContent(param.getContent());
+        Post updated = postJpaRepo.save(target);   // merge (select, update)
+        Post.PostResponse postResponse = new Post.PostResponse(updated);
+
+        if (imageRequestForm != null){
+            log.info("updatePost :: image data found");
+
+            log.info("updatePost :: remove existing Images");
+            imageJpaRepo.deleteAllByPost_PostId(postId);
+
+            List<Image.ImageRequest> images = imageRequestForm.getImages();
+
+            List<Image> imageList = images.stream()
+                    .map(img -> Image.of(img).post(updated).build())
+                    .collect(Collectors.toList());
+
+            log.info("updatePost :: insert new Images");
+            imageList = imageJpaRepo.saveAll(imageList);
+
+            postResponse.setImages(
+                    imageList.stream().map(Image.ImageResponse::of).collect(Collectors.toList())
+            );
+        }
+
+        return postResponse;
+    }
+
     public Post modifyContents(Post param){
         Post target = postJpaRepo.findById(param.getPostId()).get();
         target.setContent(param.getContent());
@@ -72,6 +103,7 @@ public class PostService {
     }
     
     public void deletePost(Long postId){
+        // 연관 comments, Images 삭제는 DB constraint 설정(hibernate @OnDelete)으로 DB에서 알아서 처리
         postJpaRepo.deleteById(postId);
     }
 

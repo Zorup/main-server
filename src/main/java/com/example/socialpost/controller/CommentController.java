@@ -1,5 +1,6 @@
 package com.example.socialpost.controller;
 
+import com.example.socialpost.common.response.CommonResult;
 import com.example.socialpost.common.response.ResponseService;
 import com.example.socialpost.common.response.SingleResult;
 import com.example.socialpost.domain.Comment;
@@ -31,5 +32,12 @@ public class CommentController {
                                             @RequestParam(value = "postId") Long postId,
                                             @RequestParam(value = "content") String content){
         return responseService.getSingleResult(commentService.addComment(cookie, postId, content));
+    }
+
+    @ApiOperation(value = "덧글 삭제", notes = "특정 덧글 하나를 삭제합니다.")
+    @DeleteMapping("/comment/{commentId}")
+    public CommonResult deleteComment(@PathVariable("commentId") Long commentId){
+        commentService.deleteComment(commentId);
+        return responseService.getSuccessResult();
     }
 }
