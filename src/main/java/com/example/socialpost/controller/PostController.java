@@ -67,10 +67,18 @@ public class PostController {
         return responseService.getSingleResult(postService.getPost(postId));
     }
 
-    @ApiOperation(value = "특정 게시글 삭제", notes = "특정 게시글 하나를 삭제")
+    @ApiOperation(value = "게시글 삭제", notes = "특정 게시글 하나를 삭제")
     @DeleteMapping(value="/post/{postId}")
     public CommonResult deletePost(@PathVariable("postId") Long postId){
         postService.deletePost(postId);
         return responseService.getSuccessResult();
+    }
+
+    @ApiOperation(value = "게시글 수정", notes = "특정 게시글 하나를 수정")
+    @PatchMapping("/post/{postId}")
+    public SingleResult<Post.PostResponse> updatePost(@ModelAttribute Post.PostRequest post,
+                                                     @ModelAttribute Image.ImageRequestForm imageForm,
+                                                      @PathVariable("postId") Long postId) {
+        return responseService.getSingleResult(postService.updatePost(post, imageForm, postId));
     }
 }
