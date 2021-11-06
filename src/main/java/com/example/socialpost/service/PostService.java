@@ -43,8 +43,8 @@ public class PostService {
         final Post newPostSaved = postJpaRepo.save(newPost);
         Post.PostResponse postResponse = new Post.PostResponse(newPostSaved);
 
-        // 넘어온 이미지가 있으면 이미지 저장하고 응답객체에 추가
-        if (imageRequestForm != null){
+//         넘어온 이미지가 있으면 이미지 저장하고 응답객체에 추가
+        if (imageRequestForm.getImages() != null){
             log.info("createPost :: image data found");
             List<Image.ImageRequest> images = imageRequestForm.getImages();
 
