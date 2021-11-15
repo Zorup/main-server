@@ -2,6 +2,8 @@ package com.example.socialpost.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
@@ -21,6 +23,7 @@ public class LikePK implements Serializable {
 
     @OneToOne(targetEntity = Post.class, fetch=FetchType.LAZY)
     @JoinColumn(name="postId")
+    @OnDelete(action = OnDeleteAction.CASCADE)  // delete all like infos related to the post when delete the post
     @JsonIgnore
     private Post post; // 각 좋아요는 하나의 게시글에 대해서 맵핑
 }
